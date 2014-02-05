@@ -94,7 +94,7 @@ public class LoginActivity extends Activity {
 			focusView.requestFocus();
 		} else {
 			String url = Generic.serverurl + "LibraryUser/SignInLibraryUser";
-			String passwordHash = Generic.computeHash(Password).toUpperCase();
+			String passwordHash = Generic.computeHash(Password);
 			JSONObject jsonObj = new JSONObject();
 			
 			try {

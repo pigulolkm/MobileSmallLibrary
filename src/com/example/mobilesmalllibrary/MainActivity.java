@@ -39,7 +39,7 @@ public class MainActivity extends Activity {
 	public void GOTOloginOut(View v)
 	{
 		// Login
-		if(Generic.loginToken.equals(null))
+		if(Generic.loginToken == null)
 		{
 			Intent intent = new Intent();
 			intent.setClass(MainActivity.this, LoginActivity.class);

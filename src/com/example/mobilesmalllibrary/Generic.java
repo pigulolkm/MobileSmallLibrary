@@ -1,6 +1,5 @@
 package com.example.mobilesmalllibrary;
 
-import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 
 
