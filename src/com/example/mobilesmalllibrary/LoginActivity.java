@@ -172,6 +172,7 @@ public class LoginActivity extends Activity {
 					if(jsonObj.getString("result").equals("True"))
 					{
 						Generic.loginToken = jsonObj.getString("token");
+						Generic.LID = jsonObj.getString("LID");
 						
 						Intent returnIntent = new Intent();
 						returnIntent.putExtra("name",jsonObj.getString("name"));
