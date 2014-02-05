@@ -31,7 +31,6 @@ public class SearchBooksActivity extends Activity {
 	
 	private String[] key;
     private ArrayAdapter<String> searchOptionAdapter;
-    private static final int scan_REQUEST = 1;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +71,7 @@ public class SearchBooksActivity extends Activity {
 					{
 						Intent intent = new Intent();
 						intent.setClass(SearchBooksActivity.this, CameraTestActivity.class);
-						startActivityForResult(intent, scan_REQUEST);
+						startActivityForResult(intent, Generic.scan_REQUEST);
 					}
 				}
 				
@@ -86,7 +85,7 @@ public class SearchBooksActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch(requestCode) {
-			case scan_REQUEST:
+			case Generic.scan_REQUEST:
 				if(resultCode == RESULT_OK)
 				{
 					editTextSearchKey.setText(data.getStringExtra("SCAN_RESULT"));
