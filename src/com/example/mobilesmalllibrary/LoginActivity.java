@@ -45,6 +45,9 @@ public class LoginActivity extends Activity {
 		EditTextPassword = (EditText)findViewById(R.id.EditTextPassword);
 	}
 	
+	////////////////////////
+	// Login Button Click //
+	////////////////////////
 	public void login(View v)
 	{
 		//Reset errors.

@@ -40,5 +40,13 @@
 			 android:textAppearance="?android:attr/textAppearanceSmall" 
 			 android:layout_marginLeft="10dip">
 		 </TextView>
+		 <TextView 
+		     android:id="@+id/textViewBookStatus" 
+			 android:layout_width="wrap_content" 
+			 android:layout_height="wrap_content"
+			 android:textColor="#ff0000"
+			 android:textAppearance="?android:attr/textAppearanceSmall" 
+			 android:layout_marginLeft="10dip">
+		 </TextView>
 	 </LinearLayout>
 </LinearLayout>

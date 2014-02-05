@@ -56,12 +56,20 @@ public class ShowSearchBooksResultActivity extends Activity {
 					item.put("author", jsonObj.getString("B_author"));
 					item.put("publisher",jsonObj.getString("B_publisher"));
 					item.put("publicationDate", jsonObj.getString("B_publicationDate"));
+					if(jsonObj.getString("B_status").equals("Y"))
+					{
+						item.put("status", "Can be borrowed");
+					}
+					else
+					{
+						item.put("status", "Cannot be borrowed");
+					}
 					list.add(item);
 				}
 				
 				SimpleAdapter adapter = new SimpleAdapter(ShowSearchBooksResultActivity.this, list, R.layout.listview_book_item, 
-						new String[]{"title","author","publisher","publicationDate"},
-						new int[]{R.id.textViewBookTitle, R.id.textViewBookAuthor, R.id.textViewBookPublisher, R.id.textViewBookPublicationDate});
+						new String[]{"title","author","publisher","publicationDate", "status"},
+						new int[]{R.id.textViewBookTitle, R.id.textViewBookAuthor, R.id.textViewBookPublisher, R.id.textViewBookPublicationDate, R.id.textViewBookStatus});
 				
 				listViewSearchResult.setAdapter(adapter);
 			}

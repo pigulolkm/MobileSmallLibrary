@@ -31,10 +31,10 @@ public final class R {
         public static final int EditTextEmail=0x7f080000;
         public static final int EditTextPassword=0x7f080001;
         public static final int TextViewWelcome=0x7f080003;
-        public static final int action_settings=0x7f080012;
+        public static final int action_settings=0x7f080013;
         public static final int btnReset=0x7f080009;
         public static final int btnSeachBooks=0x7f08000b;
-        public static final int cameraPreview=0x7f080011;
+        public static final int cameraPreview=0x7f080012;
         public static final int editTextSearchKey=0x7f080007;
         public static final int linearLayout1=0x7f080006;
         public static final int linearLayout2=0x7f08000a;
@@ -43,6 +43,7 @@ public final class R {
         public static final int textViewBookAuthor=0x7f08000e;
         public static final int textViewBookPublicationDate=0x7f080010;
         public static final int textViewBookPublisher=0x7f08000f;
+        public static final int textViewBookStatus=0x7f080011;
         public static final int textViewBookTitle=0x7f08000d;
     }
     public static final class layout {
