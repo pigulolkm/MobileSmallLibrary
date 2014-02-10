@@ -8,6 +8,7 @@ public class Generic {
 	public static final int signIn = 2;
 	
 	public static String serverurl = "http://piguloming.no-ip.org:90/api/";
+	public static String GoogleAPIGenerateQRUrl = "http://chart.apis.google.com/chart?cht=qr&chl=content&chs=200x200";
 	public static String loginToken = "";
 	public static String LID = "";
 	

@@ -43,6 +43,10 @@
             android:name="com.example.mobilesmalllibrary.LoginActivity"
             android:label="@string/title_activity_login" >
         </activity>
+        <activity
+            android:name="com.example.mobilesmalllibrary.GenerateBorrowingTokenActivity"
+            android:label="@string/title_activity_generate_borrowing_token" >
+        </activity>
     </application>
 
 </manifest>
