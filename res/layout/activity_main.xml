@@ -12,16 +12,17 @@
         android:id="@+id/TextViewWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <RelativeLayout
+        android:id="@+id/relativeLayout1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/TextViewWelcome"
         android:orientation="horizontal" >
-		
+
         <Button
             android:id="@+id/ButtonGoToLogin"
             android:layout_width="140dp"
@@ -29,7 +30,7 @@
             android:layout_alignParentLeft="true"
             android:onClick="GOTOloginOut"
             android:text="@string/Login" />
-        
+
         <Button
             android:id="@+id/ButtonGoToSearchBook"
             android:layout_width="140dp"
@@ -37,6 +38,18 @@
             android:layout_alignParentRight="true"
             android:onClick="GOTOsearchBook"
             android:text="@string/SearchBook" />
+        
+        <Button
+	        android:id="@+id/ButtonGenerateToken"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignLeft="@+id/ButtonGoToLogin"
+	        android:layout_below="@+id/ButtonGoToLogin"
+	        android:visibility="gone"
+	        android:onClick="GenerateToken"
+	        android:text="Generate Token" />
     </RelativeLayout>
+
+    
 
 </RelativeLayout>

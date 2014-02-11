@@ -12,6 +12,7 @@ public class MainActivity extends Activity {
 
 	private TextView TextViewWelcome;
 	private Button ButtonGoToLogin;
+	private Button ButtonGenerateToken;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,7 @@ public class MainActivity extends Activity {
 	{
 		TextViewWelcome = (TextView)findViewById(R.id.TextViewWelcome);
 		ButtonGoToLogin = (Button)findViewById(R.id.ButtonGoToLogin);
+		ButtonGenerateToken = (Button)findViewById(R.id.ButtonGenerateToken);
 	}
 	
 	private void checkNetworkState()
@@ -39,7 +41,7 @@ public class MainActivity extends Activity {
 	public void GOTOloginOut(View v)
 	{
 		// Login
-		if(Generic.loginToken == null)
+		if(Generic.loginToken == "0")
 		{
 			Intent intent = new Intent();
 			intent.setClass(MainActivity.this, LoginActivity.class);
@@ -51,17 +53,39 @@ public class MainActivity extends Activity {
 			ButtonGoToLogin.setText(getString(R.string.Login));
 			TextViewWelcome.setText("");
 			Generic.loginToken = null;
+			
+			setVisibilityGone();
 		}
 	}
 	
-	//////////////////////////////
+	///////////////////////////////////
 	// GOTO Search Book Button Click //
-	//////////////////////////////
+	///////////////////////////////////
 	public void GOTOsearchBook(View v)
 	{
 		Intent intent = new Intent();
 		intent.setClass(MainActivity.this, SearchBooksActivity.class);
 		startActivity(intent);
+	}
+	
+	/////////////////////////////////
+	// Generate Token Button Click //
+	/////////////////////////////////
+	public void GenerateToken(View v)
+	{
+		Intent intent = new Intent();
+		intent.setClass(MainActivity.this, GenerateBorrowingTokenActivity.class);
+		startActivity(intent);
+	}
+	
+	private void setVisibilityGone()
+	{
+		ButtonGenerateToken.setVisibility(View.GONE);
+	}
+	
+	private void setVisibilityVisible()
+	{
+		ButtonGenerateToken.setVisibility(View.VISIBLE);
 	}
 	
 	@Override
@@ -72,6 +96,7 @@ public class MainActivity extends Activity {
 				{
 					TextViewWelcome.setText("Welcome, "+data.getStringExtra("name")+"!");
 					ButtonGoToLogin.setText(getString(R.string.Logout));
+					setVisibilityVisible();
                 } 
                 break;
 		}
