@@ -43,7 +43,7 @@ public class GenerateBorrowingTokenActivity extends Activity {
 	{
 		// Generate LoginToken QR code
 		String QRPath = Generic.GoogleAPIGenerateQRUrl;
-		QRPath = QRPath.replace("content", Generic.loginToken);
+		QRPath = QRPath.replace("content", Generic.loginToken+"&"+Generic.LEmail);
 		
 		new GetTokenImageOperation().execute(QRPath);		
 	}
@@ -76,10 +76,8 @@ private class GetTokenImageOperation extends AsyncTask<String, Void, Void>{
 					if (entity != null) {
 						InputStream inputStream = null;
 					    try {
-					        // getting contents from the stream 
 					        inputStream = entity.getContent();
 					
-					        // decoding stream data back into image Bitmap that android understands
 					        tokenImage = BitmapFactory.decodeStream(inputStream);
 					    } 
 					    finally 
@@ -99,7 +97,6 @@ private class GetTokenImageOperation extends AsyncTask<String, Void, Void>{
 			}
 			catch(Exception e)
 			{
-				// You Could provide a more explicit error message for IOException
 		         httpGet.abort();
 		         Toast.makeText(GenerateBorrowingTokenActivity.this, "Something went wrong while retrieving image.", Toast.LENGTH_LONG).show();
 			}

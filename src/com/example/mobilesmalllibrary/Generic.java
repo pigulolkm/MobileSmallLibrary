@@ -11,6 +11,7 @@ public class Generic {
 	public static String GoogleAPIGenerateQRUrl = "http://chart.apis.google.com/chart?cht=qr&chl=content&chs=200x200";
 	public static String loginToken = "0";
 	public static String LID = "";
+	public static String LEmail = "";
 	
 	public static String computeHash(String input) {
 		StringBuffer sb = new StringBuffer();

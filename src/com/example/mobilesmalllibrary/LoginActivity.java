@@ -173,6 +173,7 @@ public class LoginActivity extends Activity {
 					{
 						Generic.loginToken = jsonObj.getString("token");
 						Generic.LID = jsonObj.getString("LID");
+						Generic.LEmail = Email;
 						
 						Intent returnIntent = new Intent();
 						returnIntent.putExtra("name",jsonObj.getString("name"));
