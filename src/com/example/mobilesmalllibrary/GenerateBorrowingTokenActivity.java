@@ -43,7 +43,7 @@ public class GenerateBorrowingTokenActivity extends Activity {
 	{
 		// Generate LoginToken QR code
 		String QRPath = Generic.GoogleAPIGenerateQRUrl;
-		QRPath = QRPath.replace("content", Generic.loginToken+"&"+Generic.LEmail);
+		QRPath = QRPath.replace("content", Generic.loginToken+"_"+Generic.LEmail+"_"+Generic.LID);
 		
 		new GetTokenImageOperation().execute(QRPath);		
 	}
@@ -63,7 +63,6 @@ private class GetTokenImageOperation extends AsyncTask<String, Void, Void>{
 		
 		protected Void doInBackground(String... params) {
 			
-			String result = null;
 			HttpGet httpGet = null;
 			try
 			{
