@@ -12,5 +12,6 @@
     <string name="title_activity_generate_borrowing_token">Generate Borrowing Token</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_show_borrowing_token">ShowBorrowingTokenActivity</string>
+    <string name="title_activity_show_borrowing_record">ShowBorrowingRecordActivity</string>
 
 </resources>
