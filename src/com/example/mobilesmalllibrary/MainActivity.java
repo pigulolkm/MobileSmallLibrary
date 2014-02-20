@@ -13,6 +13,7 @@ public class MainActivity extends Activity {
 	private TextView TextViewWelcome;
 	private Button ButtonGoToLogin;
 	private Button ButtonGenerateToken;
+	private Button ButtonShowBorrowingRecord;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,7 @@ public class MainActivity extends Activity {
 		TextViewWelcome = (TextView)findViewById(R.id.TextViewWelcome);
 		ButtonGoToLogin = (Button)findViewById(R.id.ButtonGoToLogin);
 		ButtonGenerateToken = (Button)findViewById(R.id.ButtonGenerateToken);
+		ButtonShowBorrowingRecord = (Button)findViewById(R.id.ButtonShowBorrowingRecord);
 	}
 	
 	private void checkNetworkState()
@@ -52,7 +54,7 @@ public class MainActivity extends Activity {
 		{
 			ButtonGoToLogin.setText(getString(R.string.Login));
 			TextViewWelcome.setText("");
-			Generic.loginToken = null;
+			Generic.loginToken = "0";
 			
 			setVisibilityGone();
 		}
@@ -81,11 +83,23 @@ public class MainActivity extends Activity {
 	private void setVisibilityGone()
 	{
 		ButtonGenerateToken.setVisibility(View.GONE);
+		ButtonShowBorrowingRecord.setVisibility(View.GONE);
 	}
 	
 	private void setVisibilityVisible()
 	{
 		ButtonGenerateToken.setVisibility(View.VISIBLE);
+		ButtonShowBorrowingRecord.setVisibility(View.VISIBLE);
+	}
+	
+	////////////////////////////////////////
+	// Show Borrowing Record Button Click //
+	////////////////////////////////////////
+	public void ShowBorrowingRecord(View v)
+	{
+		Intent intent = new Intent();
+		intent.setClass(MainActivity.this, ShowBorrowingRecordActivity.class);
+		startActivity(intent);
 	}
 	
 	@Override

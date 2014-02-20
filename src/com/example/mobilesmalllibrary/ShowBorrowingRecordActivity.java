@@ -1,10 +1,16 @@
 package com.example.mobilesmalllibrary;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,10 +19,15 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.view.Menu;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class ShowBorrowingRecordActivity extends Activity {
 	
 	private ListView listViewBorrowingRecordResult;
+	private TextView textViewBorrowingAmount;
+	private TextView textViewNonReturnedAmount;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +41,8 @@ public class ShowBorrowingRecordActivity extends Activity {
 	private void findViews()
 	{
 		listViewBorrowingRecordResult = (ListView)findViewById(R.id.listViewBorrowingRecordResult);
+		textViewBorrowingAmount = (TextView)findViewById(R.id.textViewBorrowedAmount);
+		textViewNonReturnedAmount = (TextView)findViewById(R.id.textViewNonReturnedAmount);
 	}
 	
 	private void ShowBorrowingRecord()
@@ -82,7 +95,51 @@ public class ShowBorrowingRecordActivity extends Activity {
 		protected void onPostExecute(String result)
 		{
 			Dialog.dismiss();
-			// TODO set Adapter to ListView
+
+			ShowBorrowingRecordListView(result);
+		}
+	}
+	
+	private void ShowBorrowingRecordListView(String result)
+	{
+		try {
+			ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
+			HashMap<String,Object> item;
+			JSONObject json = new JSONObject(result);
+			JSONArray jsonArray = json.getJSONArray("BorrowingRecord");
+			JSONObject jsonObj;
+			
+			for(int i = 0; i < jsonArray.length(); i++)
+			{
+				jsonObj = jsonArray.getJSONObject(i);
+				item = new HashMap<String,Object>();
+				
+				item.put("title", jsonObj.getString("Title"));
+				item.put("author", jsonObj.getString("Author"));
+				item.put("publisher", jsonObj.getString("Publisher"));
+				item.put("shouldReturnedDate", jsonObj.getString("ShouldReturnedDate"));
+				if(jsonObj.getString("ReturnedDate").equals("null"))
+				{
+					item.put("ReturnedState", "Not Returned");
+				}
+				else
+				{
+					item.put("ReturnedState", "Returned");
+				}
+				
+				list.add(item);
+			}
+			
+			textViewBorrowingAmount.setText("Borrowed Amount : " + json.getString("BorrowedAmount"));
+			textViewNonReturnedAmount.setText("Non-returned Amount : " + json.getString("NonReturnedAmount"));
+			
+			SimpleAdapter adapter = new SimpleAdapter(ShowBorrowingRecordActivity.this, list, R.layout.listview_borrowing_record_book_item, 
+					new String[]{"title","author","publisher","shouldReturnedDate", "ReturnedState"},
+					new int[]{R.id.textViewBorrowingRecordTitle, R.id.textViewBorrowingRecordAuthor, R.id.textViewBorrowingRecordPublisher, R.id.textViewBorrowingRecordShouldReturnedDate, R.id.textViewBorrowingRecordReturnedState});
+			
+			listViewBorrowingRecordResult.setAdapter(adapter);
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
 	}
 

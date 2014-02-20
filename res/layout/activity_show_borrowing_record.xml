@@ -4,10 +4,31 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ShowBorrowingRecordActivity" >
-
+	
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp">
+    
+	    <TextView
+	        android:id="@+id/textViewBorrowedAmount"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true" />
+	    
+	    <TextView
+	        android:id="@+id/textViewNonReturnedAmount"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true" />
+    </RelativeLayout>
+    
     <ListView
-            android:id="@+id/listViewBorrowingRecordResult"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+	    android:id="@+id/listViewBorrowingRecordResult"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="5dp" />
 
 </LinearLayout>

@@ -45,9 +45,21 @@
 	        android:layout_height="wrap_content"
 	        android:layout_alignLeft="@+id/ButtonGoToLogin"
 	        android:layout_below="@+id/ButtonGoToLogin"
+	        android:layout_marginTop="10dp"
 	        android:visibility="gone"
 	        android:onClick="GenerateToken"
 	        android:text="Generate Token" />
+        
+        <Button
+	        android:id="@+id/ButtonShowBorrowingRecord"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_below="@+id/ButtonGoToSearchBook"
+	        android:layout_marginTop="10dp"
+	        android:visibility="gone"
+	        android:onClick="ShowBorrowingRecord"
+	        android:text="Borrowing Record" />
     </RelativeLayout>
 
     
