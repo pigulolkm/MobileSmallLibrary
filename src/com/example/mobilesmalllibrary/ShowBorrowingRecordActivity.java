@@ -13,11 +13,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -36,6 +44,7 @@ public class ShowBorrowingRecordActivity extends Activity {
 		
 		findViews();
 		ShowBorrowingRecord();
+		setListener();
 	}
 	
 	private void findViews()
@@ -43,6 +52,27 @@ public class ShowBorrowingRecordActivity extends Activity {
 		listViewBorrowingRecordResult = (ListView)findViewById(R.id.listViewBorrowingRecordResult);
 		textViewBorrowingAmount = (TextView)findViewById(R.id.textViewBorrowedAmount);
 		textViewNonReturnedAmount = (TextView)findViewById(R.id.textViewNonReturnedAmount);
+	}
+	
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	private void setListener()
+	{
+		//listViewBorrowingRecordResult.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);		
+		listViewBorrowingRecordResult.setOnItemLongClickListener(new OnItemLongClickListener(){
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View v,	int pos, long id) {
+				if(v.isActivated())
+				{
+					v.setActivated(false);
+				}
+				else
+				{
+					v.setActivated(true);
+				}
+				return false;
+			}
+		});
 	}
 	
 	private void ShowBorrowingRecord()
@@ -142,6 +172,8 @@ public class ShowBorrowingRecordActivity extends Activity {
 			e.printStackTrace();
 		}
 	}
+	
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
