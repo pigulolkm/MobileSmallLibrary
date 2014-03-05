@@ -55,7 +55,7 @@ public class ShowSearchBooksResultActivity extends Activity {
 					item.put("title", jsonObj.getString("B_title"));
 					item.put("author", jsonObj.getString("B_author"));
 					item.put("publisher",jsonObj.getString("B_publisher"));
-					item.put("publicationDate", jsonObj.getString("B_publicationDate"));
+					item.put("publicationDate", "Published on : "+jsonObj.getString("B_publicationDate"));
 					if(jsonObj.getString("B_status").equals("Y"))
 					{
 						item.put("status", "Can be borrowed");

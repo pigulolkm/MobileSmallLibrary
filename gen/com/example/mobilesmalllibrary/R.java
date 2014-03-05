@@ -27,9 +27,10 @@ public final class R {
         public static final int activity_vertical_margin=0x7f050001;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
-        public static final int launcher=0x7f020001;
-        public static final int list_item=0x7f020002;
+        public static final int ic_action_new_label=0x7f020000;
+        public static final int ic_launcher=0x7f020001;
+        public static final int launcher=0x7f020002;
+        public static final int list_item=0x7f020003;
     }
     public static final class id {
         public static final int ButtonGenerateToken=0x7f090008;
@@ -40,6 +41,7 @@ public final class R {
         public static final int EditTextEmail=0x7f090001;
         public static final int EditTextPassword=0x7f090002;
         public static final int TextViewWelcome=0x7f090004;
+        public static final int action_renew=0x7f090020;
         public static final int action_settings=0x7f09001f;
         public static final int btnReset=0x7f09000d;
         public static final int btnSeachBooks=0x7f09000f;
