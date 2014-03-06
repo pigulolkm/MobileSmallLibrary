@@ -245,9 +245,7 @@ public class ShowBorrowingRecordActivity extends Activity {
 		@Override
 		protected void onPostExecute(String result)
 		{
-			Dialog.dismiss();
-			list.clear();
-			
+			Dialog.dismiss();			
 			RenewBooksPostExecute(result);
 		}
 	}
@@ -260,6 +258,7 @@ public class ShowBorrowingRecordActivity extends Activity {
 			if(jsonObj.getString("Result").equals("True"))
 			{
 				ShowBorrowingRecord();
+				list.clear();
 			}
 			else // Result : False
 			{
