@@ -1,37 +1,51 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".LoginActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_margin="10dip"
-    tools:context=".LoginActivity" >
-
-	<EditText
-		android:id="@+id/EditTextEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:maxLines="1"
-        android:singleLine="true" />
-
-    <EditText
-        android:id="@+id/EditTextPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dip"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:maxLines="1"
-        android:singleLine="true" />
-
-    <Button
-        android:id="@+id/ButtonLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dip"
-        android:layout_gravity="right"
-        android:text="@string/Login"
-        android:onClick="login" />
-
-</LinearLayout>
+    android:background="@drawable/background" >
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:orientation="vertical"
+	    android:layout_margin="10dip"
+	    android:background="#80ffffff" >
+	
+		<EditText
+			android:id="@+id/EditTextEmail"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:hint="Email"
+	        android:inputType="textEmailAddress"
+	        android:maxLines="1"
+	        android:textStyle="bold"
+	        android:singleLine="true">
+	
+			<requestFocus />
+	
+	    </EditText>
+	
+	    <EditText
+	        android:id="@+id/EditTextPassword"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="10dip"
+	        android:hint="Password"
+	        android:inputType="textPassword"
+	        android:maxLines="1"
+	        android:textStyle="bold"
+	        android:singleLine="true" />
+	
+	    <Button
+	        android:id="@+id/ButtonLogin"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="10dip"
+	        android:layout_gravity="right"
+	        android:text="@string/Login"
+	        android:textStyle="bold"
+	        android:onClick="login" />
+	
+	</LinearLayout>
+</RelativeLayout>
