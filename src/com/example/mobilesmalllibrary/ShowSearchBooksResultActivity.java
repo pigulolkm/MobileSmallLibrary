@@ -9,6 +9,8 @@ import org.json.JSONObject;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.Menu;
 import android.widget.ListView;
@@ -75,7 +77,15 @@ public class ShowSearchBooksResultActivity extends Activity {
 			}
 			else
 			{
-				Toast.makeText(ShowSearchBooksResultActivity.this, "0 results.", Toast.LENGTH_LONG).show();
+				AlertDialog.Builder dialog = new AlertDialog.Builder(ShowSearchBooksResultActivity.this);
+		         dialog.setTitle("0 results.");
+		         dialog.setNeutralButton("OK", new DialogInterface.OnClickListener(){
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						finish();
+					}
+		         });
+		         dialog.create().show();
 			}
 			
 		} catch (JSONException e) {

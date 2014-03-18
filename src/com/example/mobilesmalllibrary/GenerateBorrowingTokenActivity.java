@@ -12,7 +12,9 @@ import org.apache.http.util.EntityUtils;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -97,7 +99,15 @@ private class GetTokenImageOperation extends AsyncTask<String, Void, Void>{
 			catch(Exception e)
 			{
 		         httpGet.abort();
-		         Toast.makeText(GenerateBorrowingTokenActivity.this, "Something went wrong while retrieving image.", Toast.LENGTH_LONG).show();
+		         AlertDialog.Builder dialog = new AlertDialog.Builder(GenerateBorrowingTokenActivity.this);
+		         dialog.setTitle("Something went wrong while retrieving image. Please try again later.");
+		         dialog.setNeutralButton("OK", new DialogInterface.OnClickListener(){
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						finish();
+					}
+		         });
+		         dialog.create().show();
 			}
 			return null;
 		}
