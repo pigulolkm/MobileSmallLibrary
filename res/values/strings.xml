@@ -13,5 +13,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_show_borrowing_token">Borrowing Token</string>
     <string name="title_activity_show_borrowing_record">Borrowing Record</string>
-
+	<string name="warning_networkConnectionError">Oops! There was a problem connecting to the Internet. Please try again later.</string>
+    
 </resources>

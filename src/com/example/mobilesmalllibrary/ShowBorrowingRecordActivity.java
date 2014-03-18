@@ -108,7 +108,10 @@ public class ShowBorrowingRecordActivity extends Activity {
 	{
 		String url = Generic.serverurl + "BorrowingRecord/GetBorrowingRecord/" + Generic.LID + "?token=" + Generic.loginToken;
 		
-		new GetBorrowingRecordOperation().execute(url);
+		if(checkNetworkState())
+		{
+			new GetBorrowingRecordOperation().execute(url);
+		}
 	}
 	
 	private class GetBorrowingRecordOperation extends AsyncTask<String, Void, String>{
@@ -314,7 +317,10 @@ public class ShowBorrowingRecordActivity extends Activity {
 	                HashMap<String,Object> bookItem = list.get(listViewBorrowingRecordResult.getCheckedItemPosition());
 	                String url = Generic.serverurl + "BorrowingRecord/PutBorrowingRecordRenewBooks/" + bookItem.get("Bid").toString();
 	                
-	                new RenewBooksOperation().execute(url);
+	                if(checkNetworkState())
+	                {
+	                	new RenewBooksOperation().execute(url);
+	                }
 	                
 	                mode.finish(); // Action picked, so close the CAB
 	                return true;
@@ -324,4 +330,27 @@ public class ShowBorrowingRecordActivity extends Activity {
 
 		}
 	};
+	
+	private boolean checkNetworkState()
+	{
+		if(Generic.isOnline(this))
+		{
+			return true;
+		}
+		else
+        {
+        	AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        	dialog.setTitle("Warning");
+        	dialog.setMessage(getResources().getString(R.string.warning_networkConnectionError));
+        	dialog.setNeutralButton("OK", new DialogInterface.OnClickListener(){
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+					finish();
+				}
+        	}).create().show();;
+        }
+		return false;
+	}
 }

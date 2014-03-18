@@ -14,7 +14,9 @@ import org.json.JSONObject;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -102,7 +104,11 @@ public class LoginActivity extends Activity {
 				jsonObj.put("email", Email);
 				
 				String[] params = new String[]{ url, jsonObj.toString() };
-				new loginOperation().execute(params);
+				
+				if(checkNetworkState())
+				{
+					new loginOperation().execute(params);
+				}
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -198,5 +204,26 @@ public class LoginActivity extends Activity {
 		getMenuInflater().inflate(R.menu.login, menu);
 		return true;
 	}
+	
+	private boolean checkNetworkState()
+	{
+		if(Generic.isOnline(this))
+		{
+			return true;
+		}
+		else
+        {
+        	AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        	dialog.setTitle("Warning");
+        	dialog.setMessage(getResources().getString(R.string.warning_networkConnectionError));
+        	dialog.setNeutralButton("OK", new DialogInterface.OnClickListener(){
 
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+				}
+        	}).create().show();;
+        }
+		return false;
+	}
 }

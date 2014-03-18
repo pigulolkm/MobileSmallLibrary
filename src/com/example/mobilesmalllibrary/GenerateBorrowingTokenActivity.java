@@ -47,10 +47,13 @@ public class GenerateBorrowingTokenActivity extends Activity {
 		String QRPath = Generic.GoogleAPIGenerateQRUrl;
 		QRPath = QRPath.replace("content", Generic.loginToken+"_"+Generic.LEmail+"_"+Generic.LID);
 		
-		new GetTokenImageOperation().execute(QRPath);		
+		if(checkNetworkState())
+		{
+			new GetTokenImageOperation().execute(QRPath);		
+		}
 	}
 	
-private class GetTokenImageOperation extends AsyncTask<String, Void, Void>{
+	private class GetTokenImageOperation extends AsyncTask<String, Void, Void>{
 		
 		private final HttpClient  client = new DefaultHttpClient();
 		private ProgressDialog Dialog = new ProgressDialog(GenerateBorrowingTokenActivity.this);
@@ -127,6 +130,29 @@ private class GetTokenImageOperation extends AsyncTask<String, Void, Void>{
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.generate_borrowing_token, menu);
 		return true;
+	}
+	
+	private boolean checkNetworkState()
+	{
+		if(Generic.isOnline(this))
+		{
+			return true;
+		}
+		else
+        {
+        	AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        	dialog.setTitle("Warning");
+        	dialog.setMessage(getResources().getString(R.string.warning_networkConnectionError));
+        	dialog.setNeutralButton("OK", new DialogInterface.OnClickListener(){
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+					finish();
+				}
+        	}).create().show();;
+        }
+		return false;
 	}
 
 }

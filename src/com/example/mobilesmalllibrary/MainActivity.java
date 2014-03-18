@@ -2,6 +2,8 @@ package com.example.mobilesmalllibrary;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
@@ -34,7 +36,19 @@ public class MainActivity extends Activity {
 	
 	private void checkNetworkState()
 	{
-		// TODO Check network
+        if(!Generic.isOnline(this))
+        {
+        	AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        	dialog.setTitle("Warning");
+        	dialog.setMessage(getResources().getString(R.string.warning_networkConnectionError));
+        	dialog.setNeutralButton("OK", new DialogInterface.OnClickListener(){
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+				}
+        	}).create().show();;
+        }
 	}
 	
 	////////////////////////

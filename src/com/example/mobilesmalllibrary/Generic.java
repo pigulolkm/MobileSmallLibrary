@@ -2,6 +2,11 @@ package com.example.mobilesmalllibrary;
 
 import java.security.MessageDigest;
 
+import android.app.Activity;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 
 public class Generic {
 	public static final int scan_REQUEST = 1;
@@ -30,5 +35,14 @@ public class Generic {
 			e.printStackTrace();
 		}
 	    return sb.toString();
+	}
+	
+	public static boolean isOnline(Activity a) {
+	    ConnectivityManager cm = (ConnectivityManager) a.getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo netInfo = cm.getActiveNetworkInfo();
+	    if (netInfo != null && netInfo.isConnected()) {
+	        return true;
+	    }
+	    return false;
 	}
 }

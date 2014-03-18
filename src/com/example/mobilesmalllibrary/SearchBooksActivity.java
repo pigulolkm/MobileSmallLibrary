@@ -7,12 +7,15 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 
+
 import com.example.mobilesmalllibrary.Generic;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.view.Menu;
@@ -113,7 +116,10 @@ public class SearchBooksActivity extends Activity {
 			}
 			String url = Generic.serverurl + "Book/GetBookByKey"+"?searchKey="+searchKey+"&searchOption="+searchOption;
 			
-			new GetSearchBooksOperation().execute(url);
+			if(checkNetworkState())
+			{
+				new GetSearchBooksOperation().execute(url);
+			}
 		}
 	}
 	
@@ -183,6 +189,28 @@ public class SearchBooksActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.search_books, menu);
 		return true;
+	}
+	
+	private boolean checkNetworkState()
+	{
+		if(Generic.isOnline(this))
+		{
+			return true;
+		}
+		else
+        {
+        	AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        	dialog.setTitle("Warning");
+        	dialog.setMessage(getResources().getString(R.string.warning_networkConnectionError));
+        	dialog.setNeutralButton("OK", new DialogInterface.OnClickListener(){
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+				}
+        	}).create().show();;
+        }
+		return false;
 	}
 
 }
