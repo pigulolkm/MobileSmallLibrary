@@ -183,6 +183,7 @@ public class LoginActivity extends Activity {
 						
 						Intent returnIntent = new Intent();
 						returnIntent.putExtra("name",jsonObj.getString("name"));
+						returnIntent.putExtra("lastLoginTime", jsonObj.getString("lastLoginTime"));
 						setResult(RESULT_OK,returnIntent);     
 						finish();
 					}

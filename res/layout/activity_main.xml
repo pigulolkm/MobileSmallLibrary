@@ -13,11 +13,19 @@
 	    android:layout_margin="10dip"
 	    android:background="#80ffffff">
 	    <TextView
-	        android:id="@+id/TextViewWelcome"
+	        android:id="@+id/TextViewLastLoginTime"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_alignParentRight="true"
 	        android:layout_alignParentTop="true"
+	        android:textAppearance="?android:attr/textAppearanceSmall" />
+	    
+	    <TextView
+	        android:id="@+id/TextViewWelcome"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+			android:layout_below="@+id/TextViewLastLoginTime"
 	        android:textAppearance="?android:attr/textAppearanceSmall" />
 	
 	    <RelativeLayout

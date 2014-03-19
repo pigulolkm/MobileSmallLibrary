@@ -13,6 +13,7 @@ import android.widget.TextView;
 public class MainActivity extends Activity {
 
 	private TextView TextViewWelcome;
+	private TextView TextViewLastLoginTime;
 	private Button ButtonGoToLogin;
 	private Button ButtonGenerateToken;
 	private Button ButtonShowBorrowingRecord;
@@ -29,6 +30,7 @@ public class MainActivity extends Activity {
 	private void findViews()
 	{
 		TextViewWelcome = (TextView)findViewById(R.id.TextViewWelcome);
+		TextViewLastLoginTime = (TextView)findViewById(R.id.TextViewLastLoginTime);
 		ButtonGoToLogin = (Button)findViewById(R.id.ButtonGoToLogin);
 		ButtonGenerateToken = (Button)findViewById(R.id.ButtonGenerateToken);
 		ButtonShowBorrowingRecord = (Button)findViewById(R.id.ButtonShowBorrowingRecord);
@@ -68,6 +70,7 @@ public class MainActivity extends Activity {
 		{
 			ButtonGoToLogin.setText(getString(R.string.Login));
 			TextViewWelcome.setText("");
+			TextViewLastLoginTime.setText("");
 			Generic.loginToken = "0";
 			
 			setVisibilityGone();
@@ -123,6 +126,7 @@ public class MainActivity extends Activity {
 				if(resultCode == RESULT_OK)
 				{
 					TextViewWelcome.setText("Welcome, "+data.getStringExtra("name")+"!");
+					TextViewLastLoginTime.setText("Last login time : "+data.getStringExtra("lastLoginTime"));
 					ButtonGoToLogin.setText(getString(R.string.Logout));
 					setVisibilityVisible();
                 } 
