@@ -22,22 +22,21 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.example.mobilesmalllibrary.MainActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity 
-            android:name="com.example.mobilesmalllibrary.CameraTestActivity" >
+        <activity android:name="com.example.mobilesmalllibrary.CameraTestActivity" >
         </activity>
         <activity
             android:name="com.example.mobilesmalllibrary.SearchBooksActivity"
             android:label="@string/title_activity_search_books"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name="com.example.mobilesmalllibrary.ShowSearchBooksResultActivity"
@@ -58,6 +57,10 @@
             android:name="com.example.mobilesmalllibrary.ShowBorrowingRecordActivity"
             android:label="@string/title_activity_show_borrowing_record"
             android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.example.mobilesmalllibrary.SettingsActivity"
+            android:label="@string/title_activity_settings" >
         </activity>
     </application>
 
