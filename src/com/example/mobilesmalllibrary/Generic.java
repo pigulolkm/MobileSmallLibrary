@@ -4,6 +4,7 @@ import java.security.MessageDigest;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
@@ -17,6 +18,14 @@ public class Generic {
 	public static String loginToken = "0";
 	public static String LID = "";
 	public static String LEmail = "";
+	public static final String GOOGLE_PROJECT_ID = "1007963483160";
+	public static final String sharedPreferenceName = "SP";
+	public static final String REG_ID = "regId";
+	public static final String APP_VERSION = "appVersion";
+	// Shared Preferences keys
+	public static final String notificationStatusAnnouncement = "notificationStatusAnnouncement";
+	public static final String notificationStatusExpire = "notificationStatusExpire reminder";
+	public static final String notificationStatusReservation = "notificationStatusReservation reminder";
 	
 	public static String computeHash(String input) {
 		StringBuffer sb = new StringBuffer();
