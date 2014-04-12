@@ -8,10 +8,25 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -38,6 +53,7 @@ public class SettingsActivity extends Activity {
 	String regId;
 	Context context;
 	
+	private ProgressDialog Dialog;
 	
 	private String[] notificationSetting = new String[]
 	{
@@ -107,14 +123,17 @@ public class SettingsActivity extends Activity {
                 /** Getting the toggle button corresponding to the clicked item */
                 Switch sb = (Switch) rLayout.getChildAt(1);
  
-                if(sb.isChecked()){
-                    sb.setChecked(false);
-                    notificationStatus[position] = false;
-                }else{
-                    sb.setChecked(true);
-                    notificationStatus[position] = true;
-                    
-                    registerGCM();
+                if(sb.isChecked())
+                {
+                	boolean availableToRemove = unregisterGCM();
+                    sb.setChecked(availableToRemove);
+                    notificationStatus[position] = availableToRemove;
+                }
+                else
+                {
+                	boolean availableToActivate = registerGCM();
+                    sb.setChecked(availableToActivate);
+                    notificationStatus[position] = availableToActivate; 
                 }
                 
                 // Store the status to Shared Preferences
@@ -128,19 +147,45 @@ public class SettingsActivity extends Activity {
 		});
 	}
 	
-	public void registerGCM()
+	public boolean registerGCM()
 	{
-		gcm = GoogleCloudMessaging.getInstance(this);
-		regId = getRegistrationId(context);
-		if (TextUtils.isEmpty(regId)) { 
-		      registerInBackground();
+		if(checkNetworkState())
+		{
+			gcm = GoogleCloudMessaging.getInstance(this);
+			regId = getRegistrationId(context);
+			if (TextUtils.isEmpty(regId)) { 
+			      registerInBackground();
+			}
+			return true;
 		}
+		return false;
+	}
+	
+	public boolean unregisterGCM()
+	{
+		if(checkNetworkState())
+		{
+			gcm = GoogleCloudMessaging.getInstance(this);
+			String gcmId = spref.getString(Generic.GCM_ID, "-1");
+			
+			if(!gcmId.equals("-1"))
+			{
+				Log.i(TAG, "Unregister GCM start --- remove in server and preference");
+				new removeRegistionIdToServer().execute(gcmId);
+				removeRegistrationId(this); 
+			}
+			else
+			{
+				Log.i(TAG, "Unregister GCM start --- fail, gcmId does not exist in preference");
+			}
+			return false;
+		}
+		return true;
 	}
 	
 	private String getRegistrationId(Context context)
 	{
-		final SharedPreferences prefs = getSharedPreferences(Generic.sharedPreferenceName, Context.MODE_PRIVATE);
-		String registrationId = prefs.getString(Generic.REG_ID, "");
+		String registrationId = spref.getString(Generic.REG_ID, "");
 		if (registrationId.isEmpty()) 
 		{
 			Log.i(TAG, "Registration ID not found.");
@@ -151,7 +196,7 @@ public class SettingsActivity extends Activity {
 			Log.i(TAG, "Registration ID is found: " + registrationId);
 		}
 		
-	    int registeredVersion = prefs.getInt(Generic.APP_VERSION, Integer.MIN_VALUE);
+	    int registeredVersion = spref.getInt(Generic.APP_VERSION, Integer.MIN_VALUE);
 	    int currentVersion = getAppVersion(context);
 	    
 	    if (registeredVersion != currentVersion) 
@@ -177,6 +222,13 @@ public class SettingsActivity extends Activity {
 	
 	private void registerInBackground() 
 	{
+		Dialog = new ProgressDialog(SettingsActivity.this);
+		Dialog.setCancelable(false);
+		Dialog.setCanceledOnTouchOutside(false);
+		Dialog.setTitle("Loading");
+		Dialog.setMessage("Please wait...");
+		Dialog.show();
+		
 		new AsyncTask<Void, Void, String>() {
 			@Override
 			protected String doInBackground(Void... params) 
@@ -205,19 +257,168 @@ public class SettingsActivity extends Activity {
 		    {
 		    	Log.d(TAG, "Registered with GCM Server. RegID : " + regId);
 		    	storeRegistrationId(context, regId);
-		    }
+		    	
+		    	JSONObject jsonObj = new JSONObject();
+		    	try 
+		    	{
+					jsonObj.put("Gcm_regID", regId);
+					jsonObj.put("Gcm_userID", Generic.LID);
+				} 
+		    	catch (JSONException e) 
+				{
+					e.printStackTrace();
+				}
+		    	
+		    	new storeRegistionIdToServer().execute(jsonObj);
+		    }	
 		}.execute(null, null, null);
 	}
 	
 	private void storeRegistrationId(Context context, String regId) 
 	{
-	    final SharedPreferences prefs = getSharedPreferences(Generic.sharedPreferenceName, Context.MODE_PRIVATE);
 	    int appVersion = getAppVersion(context);
 	    Log.i(TAG, "Saving regId on app version " + appVersion);
-	    SharedPreferences.Editor editor = prefs.edit();
+	    SharedPreferences.Editor editor = spref.edit();
 	    editor.putString(Generic.REG_ID, regId);
 	    editor.putInt(Generic.APP_VERSION, appVersion);
 	    editor.commit();
+	}
+	
+	private class storeRegistionIdToServer extends AsyncTask<JSONObject, Void, String[]>
+	{
+		private final HttpClient  client = new DefaultHttpClient();
+		
+		
+		@Override
+		protected void onPreExecute() {
+			Log.i("SettingsActivity", "Start storing regId to server");
+		}
+		@Override
+		protected String[] doInBackground(JSONObject... jsonObj) {
+			String[] result = null;
+			try
+			{
+				HttpPost httpPost = new HttpPost(Generic.serverurl + "GCM/PostGCM");
+				// Convert JSONObject to JSON to String
+				String json = jsonObj[0].toString();
+				// Set json to StringEntity
+				StringEntity se= new StringEntity(json);
+				// Set httpPost Entity
+				httpPost.setEntity(se);
+				// Set some headers to inform server about the type of the content
+				httpPost.setHeader("Content-Encoding", "UTF-8");
+				httpPost.setHeader("Content-Type", "application/json");
+				HttpResponse httpResponse = client.execute(httpPost);
+				
+				if(httpResponse.getStatusLine().getStatusCode() == 201)
+				{
+					result = new String[]{ "201", EntityUtils.toString(httpResponse.getEntity()) };
+				}
+			}
+			catch(Exception e)
+			{
+				
+			}
+			return result;
+		}
+		
+		@Override
+		protected void onPostExecute(String[] result)
+		{
+			Dialog.dismiss();
+			if(result[0].equals("201"))
+			{
+				Log.i(TAG, "Success Registry GCM with GCM_ID : " + result[1]);
+			    SharedPreferences.Editor editor = spref.edit();
+			    editor.putString(Generic.GCM_ID, result[1]);
+			    editor.commit();
+			}
+		}
+		
+	}
+	
+	private void removeRegistrationId(Context context) 
+	{
+	    int appVersion = getAppVersion(context);
+	    Log.i(TAG, "Removing regId on app version " + appVersion);
+	    SharedPreferences.Editor editor = spref.edit();
+	    editor.remove(Generic.REG_ID);
+	    editor.remove(Generic.APP_VERSION);
+	    editor.remove(Generic.GCM_ID);
+	    editor.commit();
+	}
+	
+	private class removeRegistionIdToServer extends AsyncTask<String, Void, String>
+	{
+		private final HttpClient client = new DefaultHttpClient();
+		
+		@Override
+		protected void onPreExecute() {
+			Dialog = new ProgressDialog(SettingsActivity.this);
+			Dialog.setCancelable(true);
+			Dialog.setCanceledOnTouchOutside(false);
+			Dialog.setTitle("Loading");
+			Dialog.setMessage("Please wait...");
+			Dialog.show();
+		}
+		@Override
+		protected String doInBackground(String... gcmID) {
+			String result = null;
+			try
+			{
+				HttpDelete httpDelete = new HttpDelete(Generic.serverurl + "GCM/DeleteGCM/" + gcmID[0]);
+				HttpResponse httpResponse = client.execute(httpDelete);
+				
+				if(httpResponse.getStatusLine().getStatusCode() == 200)
+				{
+					result = "200";
+				}
+				else
+				{
+					result = httpResponse.getStatusLine().toString();
+					result += " "+ EntityUtils.toString(httpResponse.getEntity());
+				}
+				
+			}
+			catch(Exception e)
+			{
+				
+			}
+			return result;
+		}
+		
+		@Override
+		protected void onPostExecute(String result)
+		{
+			Dialog.dismiss();
+			if(result.equals("200"))
+			{
+				Log.i(TAG, "Success unregistry GCM");
+			}
+		}
+		
+	}
+	
+	private boolean checkNetworkState()
+	{
+		if(Generic.isOnline(this))
+		{
+			return true;
+		}
+		else
+        {
+        	AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        	dialog.setTitle("Warning");
+        	dialog.setMessage(getResources().getString(R.string.warning_networkConnectionError));
+        	dialog.setNeutralButton("OK", new DialogInterface.OnClickListener(){
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+				}
+        	}).create().show();;
+        }
+		return false;
 	}
 
 	@Override

@@ -19,6 +19,8 @@ public class MainActivity extends Activity {
 	private Button ButtonGenerateToken;
 	private Button ButtonShowBorrowingRecord;
 	
+	private Menu menu;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -75,6 +77,7 @@ public class MainActivity extends Activity {
 			Generic.loginToken = "0";
 			
 			setVisibilityGone();
+			onCreateOptionsMenu(this.menu);
 		}
 	}
 	
@@ -138,7 +141,11 @@ public class MainActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+		this.menu = menu;
+		if(Generic.loginToken != "0")
+		{
+			getMenuInflater().inflate(R.menu.main, menu);
+		}
 		return true;
 	}
 	
@@ -155,5 +162,12 @@ public class MainActivity extends Activity {
 	    	default :
 	    		return false;
 	    }
+	}
+	
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+		onCreateOptionsMenu(this.menu);
 	}
 }

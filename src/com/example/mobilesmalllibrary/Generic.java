@@ -20,12 +20,13 @@ public class Generic {
 	public static String LEmail = "";
 	public static final String GOOGLE_PROJECT_ID = "1007963483160";
 	public static final String sharedPreferenceName = "SP";
-	public static final String REG_ID = "regId";
-	public static final String APP_VERSION = "appVersion";
 	// Shared Preferences keys
 	public static final String notificationStatusAnnouncement = "notificationStatusAnnouncement";
 	public static final String notificationStatusExpire = "notificationStatusExpire reminder";
 	public static final String notificationStatusReservation = "notificationStatusReservation reminder";
+	public static final String REG_ID = "regId";
+	public static final String APP_VERSION = "appVersion";
+	public static final String GCM_ID = "gcmId";
 	
 	public static String computeHash(String input) {
 		StringBuffer sb = new StringBuffer();
