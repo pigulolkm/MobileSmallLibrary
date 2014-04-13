@@ -58,12 +58,12 @@ public class SettingsActivity extends Activity {
 	private String[] notificationSetting = new String[]
 	{
 		"Announcement",
-		"Expire reminder",
 		"Reservation reminder"
 	};
 	
+	// Default is false, when init(), load status from preference
 	private Boolean[] notificationStatus = {
-		true, false, false
+		false, false
 	};
 	
 	private SimpleAdapter notificationAdapter;
@@ -90,12 +90,13 @@ public class SettingsActivity extends Activity {
 		// Set adapter of ListViewNotificationSetting
 		List<HashMap<String,Object>> notificationList = new ArrayList<HashMap<String,Object>>();
 
-		for(int i=0; i < notificationSetting.length; i++){
+		for(int i = 0; i < notificationSetting.length; i++){
             HashMap<String, Object> hm = new HashMap<String,Object>();
-            notificationStatus[i] = spref.getBoolean("notificationStatus"+notificationSetting[i], true);
+            notificationStatus[i] = spref.getBoolean("notificationStatus"+notificationSetting[i], false);
             hm.put("txt", notificationSetting[i]);
-            hm.put("stat",notificationStatus[i]);
+            hm.put("stat", notificationStatus[i]);
             notificationList.add(hm);
+            Log.d(TAG, notificationSetting[i] + "'s state is :" + notificationStatus[i]);
         }
 		
 		notificationAdapter = new SimpleAdapter(SettingsActivity.this, notificationList, R.layout.listview_push_notification_setting_item,
@@ -125,7 +126,24 @@ public class SettingsActivity extends Activity {
  
                 if(sb.isChecked())
                 {
-                	boolean availableToRemove = unregisterGCM();
+                	boolean availableToRemove = false;
+                	int trueStatus = 0;
+                	
+                	/* Check if there are some items need push notification with regId,
+                	 * if trueStatus == 1 means only the current item needs, regId can be unregistered
+                	 */
+                	for(int i = 0; i < notificationStatus.length; i++)
+                	{
+	                	if(notificationStatus[i].booleanValue())
+	                	{
+	                		trueStatus += 1;
+	                	}
+                	}
+                	
+                	if(trueStatus == 1)
+                	{
+                		availableToRemove = unregisterGCM();
+                	}
                     sb.setChecked(availableToRemove);
                     notificationStatus[position] = availableToRemove;
                 }

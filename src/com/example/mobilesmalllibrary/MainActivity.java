@@ -74,7 +74,7 @@ public class MainActivity extends Activity {
 			ButtonGoToLogin.setText(getString(R.string.Login));
 			TextViewWelcome.setText("");
 			TextViewLastLoginTime.setText("");
-			Generic.loginToken = "0";
+			Generic.resetAccountInfo();
 			
 			setVisibilityGone();
 			onCreateOptionsMenu(this.menu);
@@ -144,7 +144,12 @@ public class MainActivity extends Activity {
 		this.menu = menu;
 		if(Generic.loginToken != "0")
 		{
+			menu.clear();
 			getMenuInflater().inflate(R.menu.main, menu);
+		}
+		else
+		{
+			menu.clear();
 		}
 		return true;
 	}
@@ -168,6 +173,32 @@ public class MainActivity extends Activity {
 	public void onResume()
 	{
 		super.onResume();
-		onCreateOptionsMenu(this.menu);
+		if(this.menu != null)
+		{
+			onCreateOptionsMenu(this.menu);
+		}
+	}
+	
+	@Override
+	public void onBackPressed()
+	{
+		AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+		builder.setTitle("Are you sure you want to exit?");
+		
+		builder.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				Generic.resetAccountInfo();
+				dialog.dismiss();
+				finish();
+			}
+		});
+		builder.setNegativeButton("No", new DialogInterface.OnClickListener(){
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
+		builder.create().show();
 	}
 }

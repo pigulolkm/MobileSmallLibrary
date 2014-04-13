@@ -56,4 +56,11 @@ public class Generic {
 	    }
 	    return false;
 	}
+	
+	public static void resetAccountInfo()
+	{
+		LID = "";
+		LEmail = "";
+		loginToken = "0";
+	}
 }
