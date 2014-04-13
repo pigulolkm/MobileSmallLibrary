@@ -19,6 +19,7 @@ public class Generic {
 	public static String LID = "";
 	public static String LEmail = "";
 	public static final String GOOGLE_PROJECT_ID = "1007963483160";
+	public static final String MESSAGE_KEY = "message";
 	public static final String sharedPreferenceName = "SP";
 	// Shared Preferences keys
 	public static final String notificationStatusAnnouncement = "notificationStatusAnnouncement";

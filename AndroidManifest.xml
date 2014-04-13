@@ -72,6 +72,19 @@
             android:label="@string/title_activity_settings"
             android:screenOrientation="portrait" >
         </activity>
+        
+        <receiver
+            android:name=".GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+ 
+                <category android:name="com.javapapers.android" />
+            </intent-filter>
+        </receiver>
+ 
+        <service android:name=".GCMNotificationIntentService" />
     </application>
 
 </manifest>
