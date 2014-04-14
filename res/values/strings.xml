@@ -16,4 +16,20 @@
     <string name="warning_networkConnectionError">Oops! There was a problem connecting to the Internet. Please try again later.</string>
     <string name="title_activity_settings">Settings Activity</string>
 
+    <string-array name="drawer_menu_not_login">
+        <item>Home</item>
+        <item>Login</item>
+        <item>Search Books</item>
+    </string-array>
+    
+    <string-array name="drawer_menu_login">
+        <item>Home</item>
+        <item>Logoff</item>
+        <item>Search Books</item>
+		<item>Generate Token</item>
+		<item>Borrowing Record</item>
+    </string-array>
+    
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 </resources>

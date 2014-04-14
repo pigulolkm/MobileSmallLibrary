@@ -8,6 +8,10 @@
 package com.example.mobilesmalllibrary;
 
 public final class R {
+    public static final class array {
+        public static final int drawer_menu_login=0x7f090001;
+        public static final int drawer_menu_not_login=0x7f090000;
+    }
     public static final class attr {
         /** 
     The size of the ad. It must be one of BANNER, FULL_BANNER, LEADERBOARD,
@@ -194,6 +198,7 @@ containing a value of this type.
          */
         public static final int activity_horizontal_margin=0x7f080000;
         public static final int activity_vertical_margin=0x7f080001;
+        public static final int navigation_left_drawer_width=0x7f080002;
     }
     public static final class drawable {
         public static final int background=0x7f020000;
@@ -221,58 +226,57 @@ containing a value of this type.
         public static final int common_signin_btn_text_normal_light=0x7f020016;
         public static final int common_signin_btn_text_pressed_dark=0x7f020017;
         public static final int common_signin_btn_text_pressed_light=0x7f020018;
-        public static final int ic_action_new_label=0x7f020019;
-        public static final int ic_launcher=0x7f02001a;
-        public static final int ic_plusone_medium_off_client=0x7f02001b;
-        public static final int ic_plusone_small_off_client=0x7f02001c;
-        public static final int ic_plusone_standard_off_client=0x7f02001d;
-        public static final int ic_plusone_tall_off_client=0x7f02001e;
-        public static final int launcher=0x7f02001f;
-        public static final int list_item=0x7f020020;
+        public static final int dividerline=0x7f020019;
+        public static final int drawer_shadow=0x7f02001a;
+        public static final int ic_action_new_label=0x7f02001b;
+        public static final int ic_drawer=0x7f02001c;
+        public static final int ic_launcher=0x7f02001d;
+        public static final int ic_plusone_medium_off_client=0x7f02001e;
+        public static final int ic_plusone_small_off_client=0x7f02001f;
+        public static final int ic_plusone_standard_off_client=0x7f020020;
+        public static final int ic_plusone_tall_off_client=0x7f020021;
+        public static final int launcher=0x7f020022;
+        public static final int list_item=0x7f020023;
     }
     public static final class id {
-        public static final int ButtonGenerateToken=0x7f05000e;
-        public static final int ButtonGoToLogin=0x7f05000c;
-        public static final int ButtonGoToSearchBook=0x7f05000d;
         public static final int ButtonLogin=0x7f050008;
-        public static final int ButtonShowBorrowingRecord=0x7f05000f;
         public static final int EditTextEmail=0x7f050006;
         public static final int EditTextPassword=0x7f050007;
-        public static final int ListViewNotificationSetting=0x7f050017;
-        public static final int TextViewLastLoginTime=0x7f050009;
-        public static final int TextViewWelcome=0x7f05000a;
-        public static final int action_renew=0x7f050029;
-        public static final int action_settings=0x7f050028;
-        public static final int btnReset=0x7f050013;
-        public static final int btnSeachBooks=0x7f050015;
-        public static final int cameraPreview=0x7f050027;
-        public static final int editTextSearchKey=0x7f050011;
+        public static final int ListViewNotificationSetting=0x7f050013;
+        public static final int action_renew=0x7f050025;
+        public static final int action_settings=0x7f050024;
+        public static final int btnReset=0x7f05000f;
+        public static final int btnSeachBooks=0x7f050011;
+        public static final int cameraPreview=0x7f050023;
+        public static final int content_frame=0x7f05000a;
+        public static final int drawer_layout=0x7f050009;
+        public static final int editTextSearchKey=0x7f05000d;
         public static final int hybrid=0x7f050004;
         public static final int imageViewBorrowingToken=0x7f050005;
-        public static final int linearLayout1=0x7f050010;
-        public static final int linearLayout2=0x7f050014;
-        public static final int listViewBorrowingRecordResult=0x7f05001a;
-        public static final int listViewSearchResult=0x7f050016;
+        public static final int left_drawer=0x7f05000b;
+        public static final int linearLayout1=0x7f05000c;
+        public static final int linearLayout2=0x7f050010;
+        public static final int listViewBorrowingRecordResult=0x7f050016;
+        public static final int listViewSearchResult=0x7f050012;
         public static final int none=0x7f050000;
         public static final int normal=0x7f050001;
-        public static final int relativeLayout1=0x7f05000b;
         public static final int satellite=0x7f050002;
-        public static final int spinnerSeachOption=0x7f050012;
-        public static final int switch_status=0x7f050026;
+        public static final int spinnerSeachOption=0x7f05000e;
+        public static final int switch_status=0x7f050022;
         public static final int terrain=0x7f050003;
-        public static final int textViewBookAuthor=0x7f05001c;
-        public static final int textViewBookPublicationDate=0x7f05001e;
-        public static final int textViewBookPublisher=0x7f05001d;
-        public static final int textViewBookStatus=0x7f05001f;
-        public static final int textViewBookTitle=0x7f05001b;
-        public static final int textViewBorrowedAmount=0x7f050018;
-        public static final int textViewBorrowingRecordAuthor=0x7f050021;
-        public static final int textViewBorrowingRecordPublisher=0x7f050022;
-        public static final int textViewBorrowingRecordReturnedState=0x7f050024;
-        public static final int textViewBorrowingRecordShouldReturnedDate=0x7f050023;
-        public static final int textViewBorrowingRecordTitle=0x7f050020;
-        public static final int textViewNonReturnedAmount=0x7f050019;
-        public static final int tv_item=0x7f050025;
+        public static final int textViewBookAuthor=0x7f050018;
+        public static final int textViewBookPublicationDate=0x7f05001a;
+        public static final int textViewBookPublisher=0x7f050019;
+        public static final int textViewBookStatus=0x7f05001b;
+        public static final int textViewBookTitle=0x7f050017;
+        public static final int textViewBorrowedAmount=0x7f050014;
+        public static final int textViewBorrowingRecordAuthor=0x7f05001d;
+        public static final int textViewBorrowingRecordPublisher=0x7f05001e;
+        public static final int textViewBorrowingRecordReturnedState=0x7f050020;
+        public static final int textViewBorrowingRecordShouldReturnedDate=0x7f05001f;
+        public static final int textViewBorrowingRecordTitle=0x7f05001c;
+        public static final int textViewNonReturnedAmount=0x7f050015;
+        public static final int tv_item=0x7f050021;
     }
     public static final class integer {
         public static final int google_play_services_version=0x7f070000;
@@ -285,28 +289,29 @@ containing a value of this type.
         public static final int activity_settings=0x7f030004;
         public static final int activity_show_borrowing_record=0x7f030005;
         public static final int activity_show_search_books_result=0x7f030006;
-        public static final int listview_book_item=0x7f030007;
-        public static final int listview_borrowing_record_book_item=0x7f030008;
-        public static final int listview_push_notification_setting_item=0x7f030009;
-        public static final int main=0x7f03000a;
+        public static final int drawer_list_item=0x7f030007;
+        public static final int listview_book_item=0x7f030008;
+        public static final int listview_borrowing_record_book_item=0x7f030009;
+        public static final int listview_push_notification_setting_item=0x7f03000a;
+        public static final int main=0x7f03000b;
     }
     public static final class menu {
-        public static final int generate_borrowing_token=0x7f0a0000;
-        public static final int login=0x7f0a0001;
-        public static final int main=0x7f0a0002;
-        public static final int search_books=0x7f0a0003;
-        public static final int settings=0x7f0a0004;
-        public static final int show_borrowing_record=0x7f0a0005;
-        public static final int show_search_books_result=0x7f0a0006;
+        public static final int generate_borrowing_token=0x7f0b0000;
+        public static final int login=0x7f0b0001;
+        public static final int main=0x7f0b0002;
+        public static final int search_books=0x7f0b0003;
+        public static final int settings=0x7f0b0004;
+        public static final int show_borrowing_record=0x7f0b0005;
+        public static final int show_search_books_result=0x7f0b0006;
     }
     public static final class string {
         public static final int Login=0x7f06001d;
         public static final int Logout=0x7f060022;
         public static final int SearchBook=0x7f06001e;
-        public static final int action_forgot_password=0x7f06002d;
+        public static final int action_forgot_password=0x7f06002f;
         public static final int action_settings=0x7f06001c;
-        public static final int action_sign_in_register=0x7f06002b;
-        public static final int action_sign_in_short=0x7f06002c;
+        public static final int action_sign_in_register=0x7f06002d;
+        public static final int action_sign_in_short=0x7f06002e;
         public static final int app_name=0x7f06001b;
         /**   Title for notification shown when GooglePlayServices needs to be
         enabled for a application to work. [CHAR LIMIT=70] 
@@ -402,19 +407,21 @@ containing a value of this type.
         /**  Long form sign-in button text [CHAR LIMIT=30] 
          */
         public static final int common_signin_button_text_long=0x7f060013;
-        public static final int error_field_required=0x7f060032;
-        public static final int error_incorrect_password=0x7f060031;
-        public static final int error_invalid_email=0x7f06002f;
-        public static final int error_invalid_password=0x7f060030;
+        public static final int drawer_close=0x7f06002a;
+        public static final int drawer_open=0x7f060029;
+        public static final int error_field_required=0x7f060034;
+        public static final int error_incorrect_password=0x7f060033;
+        public static final int error_invalid_email=0x7f060031;
+        public static final int error_invalid_password=0x7f060032;
         public static final int hello_world=0x7f060024;
         /**  Location client code resources (prefix with location_client) 
          */
         public static final int location_client_powered_by_google=0x7f06001a;
-        public static final int login_progress_signing_in=0x7f06002e;
+        public static final int login_progress_signing_in=0x7f060030;
         /**  Strings related to login 
          */
-        public static final int prompt_email=0x7f060029;
-        public static final int prompt_password=0x7f06002a;
+        public static final int prompt_email=0x7f06002b;
+        public static final int prompt_password=0x7f06002c;
         public static final int title_activity_generate_borrowing_token=0x7f060023;
         public static final int title_activity_login=0x7f060021;
         public static final int title_activity_search_books=0x7f06001f;
@@ -448,12 +455,12 @@ containing a value of this type.
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f090000;
+        public static final int AppBaseTheme=0x7f0a0000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f090001;
-        public static final int LoginFormContainer=0x7f090002;
+        public static final int AppTheme=0x7f0a0001;
+        public static final int LoginFormContainer=0x7f0a0002;
     }
     public static final class styleable {
         /** Attributes that can be used with a AdsAttrs.

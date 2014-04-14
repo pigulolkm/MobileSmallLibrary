@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -20,6 +21,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -37,6 +39,9 @@ public class LoginActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		
+		ActionBar actionBar = this.getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
 		
 		findViews();
 	}
@@ -205,6 +210,21 @@ public class LoginActivity extends Activity {
 		//getMenuInflater().inflate(R.menu.login, menu);
 		return true;
 	}
+	
+	@Override
+    public boolean onOptionsItemSelected(MenuItem menuItem)
+    {   
+		switch(menuItem.getItemId())
+		{
+	    	case android.R.id.home:
+			Intent intent = new Intent();
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+			intent.setClass(LoginActivity.this,MainActivity.class);
+	        startActivity(intent); 
+	        return true;
+		}
+	    return false;
+    }
 	
 	private boolean checkNetworkState()
 	{

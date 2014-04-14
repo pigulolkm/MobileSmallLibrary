@@ -18,6 +18,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -56,6 +57,9 @@ public class ShowBorrowingRecordActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_show_borrowing_record);
+		
+		ActionBar actionBar = this.getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
 		
 		findViews();
 		ShowBorrowingRecord();
@@ -288,6 +292,21 @@ public class ShowBorrowingRecordActivity extends Activity {
 		return true;
 	}
 	
+	@Override
+    public boolean onOptionsItemSelected(MenuItem menuItem)
+    {   
+		switch(menuItem.getItemId())
+		{
+	    	case android.R.id.home:
+			Intent intent = new Intent();
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+			intent.setClass(ShowBorrowingRecordActivity.this,MainActivity.class);
+	        startActivity(intent); 
+	        return true;
+		}
+	    return false;
+    }
+	
 	@SuppressLint("NewApi")
 	private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
 		
@@ -305,8 +324,8 @@ public class ShowBorrowingRecordActivity extends Activity {
 		
 		@Override
 		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-			MenuInflater inflater = mode.getMenuInflater();
-	        inflater.inflate(R.menu.show_borrowing_record, menu);
+			//MenuInflater inflater = mode.getMenuInflater();
+	        //inflater.inflate(R.menu.show_borrowing_record, menu);
 	        return true;
 		}
 		

@@ -21,6 +21,7 @@ import org.json.JSONObject;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -33,6 +34,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -73,6 +75,9 @@ public class SettingsActivity extends Activity {
 		setContentView(R.layout.activity_settings);
 		
 		context = getApplicationContext();
+		
+		ActionBar actionBar = this.getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
 		
 		findViews();
 		init();
@@ -445,5 +450,19 @@ public class SettingsActivity extends Activity {
 		//getMenuInflater().inflate(R.menu.settings, menu);
 		return true;
 	}
-
+	
+	@Override
+    public boolean onOptionsItemSelected(MenuItem menuItem)
+    {   
+		switch(menuItem.getItemId())
+		{
+	    	case android.R.id.home:
+			Intent intent = new Intent();
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+			intent.setClass(SettingsActivity.this,MainActivity.class);
+	        startActivity(intent); 
+	        return true;
+		}
+	    return false;
+    }
 }

@@ -6,12 +6,11 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
-
-
 import com.example.mobilesmalllibrary.Generic;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -19,6 +18,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -40,6 +40,9 @@ public class SearchBooksActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search_books);
 		 	    
+		ActionBar actionBar = this.getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		
 	    init();
         findViews();
         setListener();
@@ -187,9 +190,24 @@ public class SearchBooksActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.search_books, menu);
+		//getMenuInflater().inflate(R.menu.search_books, menu);
 		return true;
 	}
+	
+	@Override
+    public boolean onOptionsItemSelected(MenuItem menuItem)
+    {   
+		switch(menuItem.getItemId())
+		{
+	    	case android.R.id.home:
+			Intent intent = new Intent();
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+			intent.setClass(SearchBooksActivity.this,MainActivity.class);
+	        startActivity(intent); 
+	        return true;
+		}
+	    return false;
+    }
 	
 	private boolean checkNetworkState()
 	{
@@ -212,5 +230,4 @@ public class SearchBooksActivity extends Activity {
         }
 		return false;
 	}
-
 }
