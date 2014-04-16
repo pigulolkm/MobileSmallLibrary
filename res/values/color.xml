@@ -6,4 +6,5 @@
     <color name="blue">#0096ED</color>
     <color name="deepBlue">#00A5ED</color>
     <color name="transparent">#80ffffff</color>
+    <color name="red">#ff0000</color>
 </resources>

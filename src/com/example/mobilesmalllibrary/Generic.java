@@ -29,6 +29,8 @@ public class Generic {
 	public static final String APP_VERSION = "appVersion";
 	public static final String GCM_ID = "gcmId";
 	
+	public static String announcementJson = "";
+	
 	public static String computeHash(String input) {
 		StringBuffer sb = new StringBuffer();
 		try

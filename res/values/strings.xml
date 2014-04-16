@@ -21,15 +21,16 @@
         <item>Login</item>
         <item>Search Books</item>
     </string-array>
-    
     <string-array name="drawer_menu_login">
         <item>Home</item>
         <item>Logoff</item>
         <item>Search Books</item>
-		<item>Generate Token</item>
-		<item>Borrowing Record</item>
+        <item>Generate Token</item>
+        <item>Borrowing Record</item>
     </string-array>
-    
+
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    <string name="title_activity_show_announcement">Show Announcement</string>
+
 </resources>

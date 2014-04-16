@@ -1,26 +1,47 @@
 package com.example.mobilesmalllibrary;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
 	private TextView TextViewWelcome;
 	private TextView TextViewLastLoginTime;
+	private ListView ListViewAnnouncementResult;
 	
 	private Menu menu;
 	private DrawerLayout layDrawer;
@@ -43,12 +64,114 @@ public class MainActivity extends Activity {
         getActionBar().setTitle(getTitle());
 		
 		findViews();
+		if(Generic.announcementJson == "")
+		{
+			if(Generic.isOnline(this))
+			{
+				new downloadLastFiveAnnouncement().execute();
+			}
+		}
+		else
+		{
+			showAnnouncement(Generic.announcementJson);
+		}
 	}
 	
 	private void findViews()
 	{
-		/*TextViewWelcome = (TextView)findViewById(R.id.TextViewWelcome);
-		TextViewLastLoginTime = (TextView)findViewById(R.id.TextViewLastLoginTime);*/
+		TextViewWelcome = (TextView)findViewById(R.id.TextViewWelcome);
+		TextViewLastLoginTime = (TextView)findViewById(R.id.TextViewLastLoginTime);
+		ListViewAnnouncementResult = (ListView)findViewById(R.id.ListViewAnnouncementResult);
+		ListViewAnnouncementResult.setOnItemClickListener(new announcementOnItemClick());
+	}
+	
+	private class downloadLastFiveAnnouncement extends AsyncTask<Void, Void, String>
+	{
+		private final HttpClient  client = new DefaultHttpClient();
+		private ProgressDialog Dialog = new ProgressDialog(MainActivity.this);
+		
+		@Override
+		protected void onPreExecute() {
+			Dialog.setCancelable(true);
+			Dialog.setCanceledOnTouchOutside(false);
+			Dialog.setTitle("Loading");
+			Dialog.setMessage("Please wait...");
+			Dialog.show();
+		}
+		
+		@Override
+		protected String doInBackground(Void...params) {
+			
+			String result = null;
+			try
+			{
+				HttpGet httpGet = new HttpGet(Generic.serverurl + "Announcement/GetLastFiveAnnouncements");
+				HttpResponse httpResponse = client.execute(httpGet);
+				if(httpResponse.getStatusLine().getStatusCode() == 200)
+				{
+					result = EntityUtils.toString(httpResponse.getEntity());
+					
+				}
+				else
+				{
+					result = httpResponse.getStatusLine().toString();
+				}
+				
+			}
+			catch(Exception e)
+			{
+				
+			}
+			return result;
+		}
+		
+		@Override
+		protected void onPostExecute(String result)
+		{
+			Dialog.dismiss();
+			Generic.announcementJson = result;
+			showAnnouncement(Generic.announcementJson);
+			Log.d("MainActivity", result);
+		}
+	}
+	
+	private void showAnnouncement(String json)
+	{
+		ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
+		HashMap<String,Object> item;
+		
+		try {
+			JSONArray jsonArray = new JSONArray(json);
+
+			if(jsonArray.length() != 0)
+			{			
+				JSONObject jsonObj;
+				
+				for(int i = 0; i < jsonArray.length(); i++)
+				{
+					jsonObj = jsonArray.getJSONObject(i);
+					item = new HashMap<String,Object>();
+					
+					String[] msg = jsonObj.getString("A_content").split(":");
+					String datetime = jsonObj.getString("A_datetime").replace("T", " ");
+					String[] temp = datetime.split(":");
+					String YYYYmmddHHMM = temp[0] + ":" + temp[1];
+					
+					item.put("msg", msg[1]);
+					item.put("datetime", YYYYmmddHHMM);
+					list.add(item);
+				}
+				
+				SimpleAdapter adapter = new SimpleAdapter(MainActivity.this, list, R.layout.listview_announcement_item, 
+						new String[]{"msg","datetime"},
+						new int[]{R.id.textViewAnnouncementContent, R.id.textViewAnnouncementDatetime});
+				
+				ListViewAnnouncementResult.setAdapter(adapter);
+			}
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}	
 	}
 	
 	private void checkNetworkState()
@@ -187,8 +310,8 @@ public class MainActivity extends Activity {
 	
 	public void Logout()
 	{
-		/*TextViewWelcome.setText("");
-		TextViewLastLoginTime.setText("");*/
+		TextViewWelcome.setText("");
+		TextViewLastLoginTime.setText("");
 		Generic.resetAccountInfo();
 		
 		Intent intent = new Intent();
@@ -226,8 +349,8 @@ public class MainActivity extends Activity {
 			case Generic.signIn:
 				if(resultCode == RESULT_OK)
 				{
-					/*TextViewWelcome.setText("Welcome, "+data.getStringExtra("name")+"!");
-					TextViewLastLoginTime.setText("Last login time : "+data.getStringExtra("lastLoginTime")); */
+					TextViewWelcome.setText("Welcome, "+data.getStringExtra("name")+"!");
+					TextViewLastLoginTime.setText("Last login time : "+data.getStringExtra("lastLoginTime"));
 					initDrawerList();
                 } 
                 break;
@@ -266,6 +389,18 @@ public class MainActivity extends Activity {
 	    return super.onOptionsItemSelected(item);
 	}
 	
+	public class announcementOnItemClick implements OnItemClickListener
+	{
+		@Override
+		public void onItemClick(AdapterView<?> parent, View v, int pos, long arg3) 
+		{
+			Intent intent = new Intent();
+			intent.setClass(MainActivity.this, ShowAnnouncementActivity.class);
+			intent.putExtra("Pos", pos);
+			startActivity(intent);
+		}
+	}
+	
 	@Override
 	public void onResume()
 	{
@@ -273,6 +408,18 @@ public class MainActivity extends Activity {
 		if(this.menu != null)
 		{
 			onCreateOptionsMenu(this.menu);
+		}
+		
+		if(Generic.announcementJson == "")
+		{
+			if(Generic.isOnline(this))
+			{
+				new downloadLastFiveAnnouncement().execute();
+			}
+		}
+		else
+		{
+			showAnnouncement(Generic.announcementJson);
 		}
 	}
 	

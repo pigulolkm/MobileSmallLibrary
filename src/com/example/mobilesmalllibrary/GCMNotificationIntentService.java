@@ -85,6 +85,7 @@ public class GCMNotificationIntentService extends IntentService {
 						.build();
 		
 		mNotificationManager.notify(NOTIFICATION_ID, notification);
+		Generic.announcementJson = "";
 		Log.d(TAG, "Notification sent sucessfully");
 	}
 }
