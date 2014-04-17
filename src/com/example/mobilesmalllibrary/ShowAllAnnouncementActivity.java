@@ -62,12 +62,17 @@ public class ShowAllAnnouncementActivity extends Activity {
 					jsonObj = jsonArray.getJSONObject(i);
 					item = new HashMap<String,Object>();
 					
-					String[] msg = jsonObj.getString("A_content").split(":");
+					String[] msgs = jsonObj.getString("A_content").split(":");
+					String msg = "";
+					for(int j = 1; j < msgs.length; j++)
+					{
+						msg += msgs[j];
+					}
 					String datetime = jsonObj.getString("A_datetime").replace("T", " ");
 					String[] temp = datetime.split(":");
 					String YYYYmmddHHMM = temp[0] + ":" + temp[1];
 					
-					item.put("msg", msg[1]);
+					item.put("msg", msg);
 					item.put("datetime", YYYYmmddHHMM);
 					list.add(item);
 				}

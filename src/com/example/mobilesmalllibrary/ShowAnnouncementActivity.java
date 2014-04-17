@@ -47,12 +47,17 @@ public class ShowAnnouncementActivity extends Activity {
 			if(jsonArray.length() != 0)
 			{			
 				JSONObject jsonObj = jsonArray.getJSONObject(posOfSelectedItem);
-				String[] msg = jsonObj.getString("A_content").split(":");
+				String[] msgs = jsonObj.getString("A_content").split(":");
+				String msg = "";
+				for(int j = 1; j < msgs.length; j++)
+				{
+					msg += msgs[j];
+				}
 				String datetime = jsonObj.getString("A_datetime").replace("T", " ");
 				String[] temp = datetime.split(":");
 				String YYYYmmddHHMM = temp[0] + ":" + temp[1];
 				
-				textViewAnnouncementContent.setText(msg[1]);
+				textViewAnnouncementContent.setText(msg);
 				textViewAnnouncementTime.setText(YYYYmmddHHMM);
 			}
 			
