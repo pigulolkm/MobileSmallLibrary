@@ -40,24 +40,33 @@
 	            
 	        </LinearLayout>
 	        
-	        <LinearLayout 
+	        <RelativeLayout 
 	            android:layout_width="match_parent"
 			    android:layout_height="wrap_content"
 			    android:background="#E60096ED"
-			    android:orientation="vertical"
 			    android:paddingLeft="10dp"
-			    android:paddingRight="10dp"
-			    android:layout_gravity="center">
+			    android:paddingRight="10dp" >
 	            
-	            <TextView
-	                android:text="Announcement"
-	                android:layout_width="match_parent"
+	            <Button
+	                android:id="@+id/ButtonShowAllAnnouncement"
+	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:gravity="center"
+	                android:text="Show All"
+	                android:layout_alignParentRight="true"
 	                android:textColor="@color/white"
-	                android:textStyle="bold"
-	                android:textAppearance="?android:attr/textAppearanceLarge" />
-	        </LinearLayout>
+	                android:onClick="showAllAnnouncement" />
+
+	            <TextView
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignBaseline="@+id/ButtonShowAllAnnouncement"
+	                android:layout_alignParentLeft="true"
+	                android:text="Announcement"
+	                android:textAppearance="?android:attr/textAppearanceLarge"
+	                android:textColor="@color/white"
+	                android:textStyle="bold" />
+
+	        </RelativeLayout>
 	        
 		    <ListView
 		            android:id="@+id/ListViewAnnouncementResult"

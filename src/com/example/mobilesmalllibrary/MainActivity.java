@@ -174,6 +174,64 @@ public class MainActivity extends Activity {
 		}	
 	}
 	
+	public void showAllAnnouncement(View v)
+	{		
+		if(Generic.isOnline(this))
+		{
+			new showAllAnnouncementOperation().execute(null, null);
+		}
+	}
+	
+	private class showAllAnnouncementOperation extends AsyncTask<String, Void, String>
+	{
+		private final HttpClient client = new DefaultHttpClient();
+		private ProgressDialog Dialog = new ProgressDialog(MainActivity.this);
+		
+		@Override
+		protected void onPreExecute() {
+			Dialog.setCancelable(true);
+			Dialog.setCanceledOnTouchOutside(false);
+			Dialog.setTitle("Loading");
+			Dialog.setMessage("Please wait...");
+			Dialog.show();
+		}
+		
+		@Override
+		protected String doInBackground(String... params) {
+			String result = null;
+			try
+			{
+				HttpGet httpGet = new HttpGet(Generic.serverurl + "Announcement/GetAnnouncements");
+				HttpResponse httpResponse = client.execute(httpGet);
+				if(httpResponse.getStatusLine().getStatusCode() == 200)
+				{
+					result = EntityUtils.toString(httpResponse.getEntity());
+					
+				}
+				else
+				{
+					result = httpResponse.getStatusLine().toString();
+				}
+			}
+			catch(Exception e)
+			{
+				
+			}
+			return result;
+		}
+		
+		@Override
+		protected void onPostExecute(String result)
+		{
+			Dialog.dismiss();
+			Log.d("MainActivity-ShowAllannouncement", result);
+			Intent intent = new Intent();
+			intent.setClass(MainActivity.this, ShowAllAnnouncementActivity.class);
+			intent.putExtra("AllAnnouncementJson", result);
+			startActivity(intent);
+		}
+	};
+	
 	private void checkNetworkState()
 	{
         if(!Generic.isOnline(this))
