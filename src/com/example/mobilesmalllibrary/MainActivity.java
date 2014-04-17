@@ -32,6 +32,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -42,6 +43,7 @@ public class MainActivity extends Activity {
 	private TextView TextViewWelcome;
 	private TextView TextViewLastLoginTime;
 	private ListView ListViewAnnouncementResult;
+	private LinearLayout LinearLayoutWelcomeHeader;
 	
 	private Menu menu;
 	private DrawerLayout layDrawer;
@@ -83,6 +85,7 @@ public class MainActivity extends Activity {
 		TextViewLastLoginTime = (TextView)findViewById(R.id.TextViewLastLoginTime);
 		ListViewAnnouncementResult = (ListView)findViewById(R.id.ListViewAnnouncementResult);
 		ListViewAnnouncementResult.setOnItemClickListener(new announcementOnItemClick());
+		LinearLayoutWelcomeHeader = (LinearLayout)findViewById(R.id.LinearLayoutWelcomeHeader);
 	}
 	
 	private class downloadLastFiveAnnouncement extends AsyncTask<Void, Void, String>
@@ -361,6 +364,8 @@ public class MainActivity extends Activity {
 	
 	public void Login()
 	{
+		LinearLayoutWelcomeHeader.setVisibility(View.VISIBLE);
+		
 		Intent intent = new Intent();
 		intent.setClass(MainActivity.this, LoginActivity.class);
 		startActivityForResult(intent, Generic.signIn);
@@ -371,6 +376,7 @@ public class MainActivity extends Activity {
 		TextViewWelcome.setText("");
 		TextViewLastLoginTime.setText("");
 		Generic.resetAccountInfo();
+		LinearLayoutWelcomeHeader.setVisibility(View.GONE);
 		
 		Intent intent = new Intent();
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
