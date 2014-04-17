@@ -21,6 +21,9 @@ public class Generic {
 	public static final String GOOGLE_PROJECT_ID = "1007963483160";
 	public static final String MESSAGE_KEY = "message";
 	public static final String sharedPreferenceName = "SP";
+	public static final String BookStatus_ONTHESHELF = "On the shelf";
+	public static final String BookStatus_BORROWED = "Borrowed";
+	public static final String BookStatus_RESERVED = "Reserved";
 	// Shared Preferences keys
 	public static final String notificationStatusAnnouncement = "notificationStatusAnnouncement";
 	public static final String notificationStatusExpire = "notificationStatusExpire reminder";
