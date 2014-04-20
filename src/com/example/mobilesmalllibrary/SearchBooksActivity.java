@@ -6,6 +6,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -169,7 +170,7 @@ public class SearchBooksActivity extends Activity {
 			try
 			{
 				HttpPost httpPost = new HttpPost(params[0]);
-				StringEntity se= new StringEntity(params[1]);
+				StringEntity se= new StringEntity(params[1], HTTP.UTF_8);
 				// Set httpPost Entity
 				httpPost.setEntity(se);
 				// Set some headers to inform server about the type of the content

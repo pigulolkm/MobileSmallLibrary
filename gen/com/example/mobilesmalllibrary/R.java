@@ -317,7 +317,9 @@ containing a value of this type.
         public static final int show_all_announcement=0x7f0b0005;
         public static final int show_announcement=0x7f0b0006;
         public static final int show_borrowing_record=0x7f0b0007;
-        public static final int show_search_books_result=0x7f0b0008;
+        public static final int show_borrowing_record_on_listview_item_selected=0x7f0b0008;
+        public static final int show_search_books_result=0x7f0b0009;
+        public static final int show_search_books_result_on_listview_item_selected=0x7f0b000a;
     }
     public static final class string {
         public static final int Login=0x7f06001d;

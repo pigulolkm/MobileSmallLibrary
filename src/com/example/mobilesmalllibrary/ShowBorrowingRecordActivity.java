@@ -288,7 +288,7 @@ public class ShowBorrowingRecordActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		//getMenuInflater().inflate(R.menu.show_borrowing_record, menu);
+		getMenuInflater().inflate(R.menu.show_borrowing_record, menu);
 		return true;
 	}
 	
@@ -324,8 +324,8 @@ public class ShowBorrowingRecordActivity extends Activity {
 		
 		@Override
 		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-			//MenuInflater inflater = mode.getMenuInflater();
-	        //inflater.inflate(R.menu.show_borrowing_record, menu);
+			MenuInflater inflater = mode.getMenuInflater();
+	        inflater.inflate(R.menu.show_borrowing_record_on_listview_item_selected, menu);
 	        return true;
 		}
 		

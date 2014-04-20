@@ -68,4 +68,13 @@ public class Generic {
 		LEmail = "";
 		loginToken = "0";
 	}
+	
+	public static boolean isLoggedIn()
+	{
+		if(Generic.loginToken == "0")
+		{
+			return false;
+		}
+		return true;
+	}
 }

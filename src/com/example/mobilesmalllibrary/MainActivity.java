@@ -28,6 +28,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -299,14 +300,14 @@ public class MainActivity extends Activity {
 	
 	private void initDrawerList(){
 		ArrayAdapter<String> adapter;
-		if(Generic.loginToken == "0")
+		if(Generic.isLoggedIn())
 		{
-			drawer_menu = this.getResources().getStringArray(R.array.drawer_menu_not_login);
+			drawer_menu = this.getResources().getStringArray(R.array.drawer_menu_login);
 			adapter = new ArrayAdapter<String>(this, R.layout.drawer_list_item, drawer_menu);
 		}
 		else
 		{
-			drawer_menu = this.getResources().getStringArray(R.array.drawer_menu_login);
+			drawer_menu = this.getResources().getStringArray(R.array.drawer_menu_not_login);
 			adapter = new ArrayAdapter<String>(this, R.layout.drawer_list_item, drawer_menu);
 		}
         lstDrawer.setAdapter(adapter);
@@ -321,7 +322,7 @@ public class MainActivity extends Activity {
 	
 	private void selectItem(int position) {
 		
-		if(Generic.loginToken != "0") // logged in
+		if(Generic.isLoggedIn()) // logged in
 		{
 		    switch (position) {
 			    case 0: // Home
@@ -369,8 +370,6 @@ public class MainActivity extends Activity {
 	
 	public void Login()
 	{
-		LinearLayoutWelcomeHeader.setVisibility(View.VISIBLE);
-		
 		Intent intent = new Intent();
 		intent.setClass(MainActivity.this, LoginActivity.class);
 		startActivityForResult(intent, Generic.signIn);
@@ -418,6 +417,9 @@ public class MainActivity extends Activity {
 			case Generic.signIn:
 				if(resultCode == RESULT_OK)
 				{
+					LinearLayoutWelcomeHeader.setVisibility(View.VISIBLE);
+					ViewGroup vg = (ViewGroup) findViewById(R.id.drawer_layout);
+					vg.invalidate();
 					TextViewWelcome.setText("Welcome, "+data.getStringExtra("name")+"!");
 					TextViewLastLoginTime.setText("Last login time : "+data.getStringExtra("lastLoginTime"));
 					initDrawerList();
@@ -430,7 +432,7 @@ public class MainActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		this.menu = menu;
-		if(Generic.loginToken != "0")
+		if(Generic.isLoggedIn())
 		{
 			getMenuInflater().inflate(R.menu.main, menu);
 		}
