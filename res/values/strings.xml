@@ -27,11 +27,13 @@
         <item>Search Books</item>
         <item>Generate Token</item>
         <item>Borrowing Record</item>
+        <item>Reservation</item>
     </string-array>
 
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="title_activity_show_announcement">Show Announcement</string>
     <string name="title_activity_show_all_announcement">Show All Announcement</string>
+    <string name="title_activity_reservation">Reservation</string>
 
 </resources>

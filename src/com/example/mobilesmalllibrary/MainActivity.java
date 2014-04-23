@@ -340,6 +340,8 @@ public class MainActivity extends Activity {
 			    case 4: // Borrowing Record
 			    	ShowBorrowingRecord();
 			    	break;
+			    case 5: // Reservation
+			    	ShowReservation();
 			    default:
 			    	
 			        return;
@@ -408,6 +410,13 @@ public class MainActivity extends Activity {
 	{
 		Intent intent = new Intent();
 		intent.setClass(MainActivity.this, ShowBorrowingRecordActivity.class);
+		startActivity(intent);
+	}
+	
+	public void ShowReservation()
+	{
+		Intent intent = new Intent();
+		intent.setClass(MainActivity.this, ReservationActivity.class);
 		startActivity(intent);
 	}
 	

@@ -96,6 +96,11 @@
             android:label="@string/title_activity_show_all_announcement"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="com.example.mobilesmalllibrary.ReservationActivity"
+            android:label="@string/title_activity_reservation"
+            android:screenOrientation="portrait"  >
+        </activity>
     </application>
 
 </manifest>
