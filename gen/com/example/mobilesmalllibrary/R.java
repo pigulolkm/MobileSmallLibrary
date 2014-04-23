@@ -250,11 +250,11 @@ containing a value of this type.
         public static final int ListViewNotificationSetting=0x7f050018;
         public static final int TextViewLastLoginTime=0x7f05000c;
         public static final int TextViewWelcome=0x7f05000d;
-        public static final int action_renew=0x7f05002e;
-        public static final int action_settings=0x7f05002d;
+        public static final int action_renew=0x7f05002f;
+        public static final int action_settings=0x7f05002e;
         public static final int btnReset=0x7f050014;
         public static final int btnSeachBooks=0x7f050016;
-        public static final int cameraPreview=0x7f05002c;
+        public static final int cameraPreview=0x7f05002d;
         public static final int content_frame=0x7f05000a;
         public static final int drawer_layout=0x7f050009;
         public static final int editTextSearchKey=0x7f050012;
@@ -269,7 +269,7 @@ containing a value of this type.
         public static final int normal=0x7f050001;
         public static final int satellite=0x7f050002;
         public static final int spinnerSeachOption=0x7f050013;
-        public static final int switch_status=0x7f05002b;
+        public static final int switch_status=0x7f05002c;
         public static final int terrain=0x7f050003;
         public static final int textViewAnnouncementContent=0x7f05001b;
         public static final int textViewAnnouncementDatetime=0x7f05001f;
@@ -277,16 +277,17 @@ containing a value of this type.
         public static final int textViewBookAuthor=0x7f050021;
         public static final int textViewBookPublicationDate=0x7f050023;
         public static final int textViewBookPublisher=0x7f050022;
+        public static final int textViewBookReservationCount=0x7f050025;
         public static final int textViewBookStatus=0x7f050024;
         public static final int textViewBookTitle=0x7f050020;
         public static final int textViewBorrowedAmount=0x7f05001c;
-        public static final int textViewBorrowingRecordAuthor=0x7f050026;
-        public static final int textViewBorrowingRecordPublisher=0x7f050027;
-        public static final int textViewBorrowingRecordReturnedState=0x7f050029;
-        public static final int textViewBorrowingRecordShouldReturnedDate=0x7f050028;
-        public static final int textViewBorrowingRecordTitle=0x7f050025;
+        public static final int textViewBorrowingRecordAuthor=0x7f050027;
+        public static final int textViewBorrowingRecordPublisher=0x7f050028;
+        public static final int textViewBorrowingRecordReturnedState=0x7f05002a;
+        public static final int textViewBorrowingRecordShouldReturnedDate=0x7f050029;
+        public static final int textViewBorrowingRecordTitle=0x7f050026;
         public static final int textViewNonReturnedAmount=0x7f05001d;
-        public static final int tv_item=0x7f05002a;
+        public static final int tv_item=0x7f05002b;
     }
     public static final class integer {
         public static final int google_play_services_version=0x7f070000;

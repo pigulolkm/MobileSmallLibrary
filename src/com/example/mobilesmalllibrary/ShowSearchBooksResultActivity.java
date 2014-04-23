@@ -92,25 +92,28 @@ public class ShowSearchBooksResultActivity extends Activity {
 			if(jsonArray.length() != 0)
 			{			
 				JSONObject jsonObj;
+				JSONObject bookObj;
 				
 				for(int i = 0; i < jsonArray.length(); i++)
 				{
 					jsonObj = jsonArray.getJSONObject(i);
+					bookObj = jsonObj.getJSONObject("Book");
 					item = new HashMap<String,Object>();
 					
-					item.put("Bid", jsonObj.getString("B_id"));
-					item.put("title", jsonObj.getString("B_title"));
-					item.put("author", jsonObj.getString("B_author"));
-					item.put("publisher",jsonObj.getString("B_publisher"));
-					item.put("publicationDate", "Published on : "+jsonObj.getString("B_publicationDate"));
-					item.put("status", jsonObj.getString("B_status"));
+					item.put("Bid", bookObj.getString("B_id"));
+					item.put("title", bookObj.getString("B_title"));
+					item.put("author", bookObj.getString("B_author"));
+					item.put("publisher",bookObj.getString("B_publisher"));
+					item.put("publicationDate", "Published on : "+bookObj.getString("B_publicationDate"));
+					item.put("status", bookObj.getString("B_status"));
 					
+					item.put("count", "Reserved count : " + jsonObj.getString("Count"));
 					list.add(item);
 				}
 				
 				SimpleAdapter adapter = new SimpleAdapter(ShowSearchBooksResultActivity.this, list, R.layout.listview_book_item, 
-						new String[]{"title","author","publisher","publicationDate", "status"},
-						new int[]{R.id.textViewBookTitle, R.id.textViewBookAuthor, R.id.textViewBookPublisher, R.id.textViewBookPublicationDate, R.id.textViewBookStatus});
+						new String[]{"title","author","publisher","publicationDate", "status", "count"},
+						new int[]{R.id.textViewBookTitle, R.id.textViewBookAuthor, R.id.textViewBookPublisher, R.id.textViewBookPublicationDate, R.id.textViewBookStatus, R.id.textViewBookReservationCount});
 				
 				listViewSearchResult.setAdapter(adapter);
 			}
