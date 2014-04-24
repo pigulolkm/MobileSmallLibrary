@@ -18,7 +18,9 @@
 	    <ListView
 		    android:id="@+id/ListViewAllReservation"
 		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content" />
+		    android:layout_height="wrap_content"
+		    android:fastScrollEnabled="true"
+		    android:choiceMode="singleChoice" />
     </LinearLayout>
 
 </RelativeLayout>

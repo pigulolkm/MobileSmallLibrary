@@ -229,15 +229,16 @@ containing a value of this type.
         public static final int common_signin_btn_text_pressed_light=0x7f020018;
         public static final int dividerline=0x7f020019;
         public static final int drawer_shadow=0x7f02001a;
-        public static final int ic_action_new_label=0x7f02001b;
-        public static final int ic_drawer=0x7f02001c;
-        public static final int ic_launcher=0x7f02001d;
-        public static final int ic_plusone_medium_off_client=0x7f02001e;
-        public static final int ic_plusone_small_off_client=0x7f02001f;
-        public static final int ic_plusone_standard_off_client=0x7f020020;
-        public static final int ic_plusone_tall_off_client=0x7f020021;
-        public static final int launcher=0x7f020022;
-        public static final int list_item=0x7f020023;
+        public static final int ic_action_cancel=0x7f02001b;
+        public static final int ic_action_new_label=0x7f02001c;
+        public static final int ic_drawer=0x7f02001d;
+        public static final int ic_launcher=0x7f02001e;
+        public static final int ic_plusone_medium_off_client=0x7f02001f;
+        public static final int ic_plusone_small_off_client=0x7f020020;
+        public static final int ic_plusone_standard_off_client=0x7f020021;
+        public static final int ic_plusone_tall_off_client=0x7f020022;
+        public static final int launcher=0x7f020023;
+        public static final int list_item=0x7f020024;
     }
     public static final class id {
         public static final int ButtonLogin=0x7f050008;
@@ -329,8 +330,9 @@ containing a value of this type.
         public static final int show_announcement=0x7f0b0007;
         public static final int show_borrowing_record=0x7f0b0008;
         public static final int show_borrowing_record_on_listview_item_selected=0x7f0b0009;
-        public static final int show_search_books_result=0x7f0b000a;
-        public static final int show_search_books_result_on_listview_item_selected=0x7f0b000b;
+        public static final int show_reservation_on_listview_item_selected=0x7f0b000a;
+        public static final int show_search_books_result=0x7f0b000b;
+        public static final int show_search_books_result_on_listview_item_selected=0x7f0b000c;
     }
     public static final class string {
         public static final int Login=0x7f06001d;

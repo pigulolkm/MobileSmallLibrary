@@ -3,17 +3,24 @@ package com.example.mobilesmalllibrary;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -21,14 +28,22 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 
 public class ReservationActivity extends Activity {
 
 	private ListView ListViewAllReservation;
+	private ActionMode mActionMode;
+	private int selectedItemId;
 	private ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
 	private SimpleAdapter adapter;
 	
@@ -42,11 +57,47 @@ public class ReservationActivity extends Activity {
 		
 		findViews();
 		showReservations();
+		setListener();
 	}
 	
 	public void findViews()
 	{
 		ListViewAllReservation = (ListView)findViewById(R.id.ListViewAllReservation);
+	}
+	
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	private void setListener()
+	{
+		ListViewAllReservation.setOnItemClickListener(new OnItemClickListener(){
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View v, int pos, long arg3) {
+				selectedItemId = pos;
+			}
+		});
+		
+		ListViewAllReservation.setOnItemLongClickListener(new OnItemLongClickListener(){
+			
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View v, int pos, long id) {
+				if(v.isActivated())
+				{
+					v.setActivated(false);
+					selectedItemId = -1;
+					//ListViewAllReservation.setItemChecked(pos, false);
+				}
+				else
+				{
+					// Start the CAB using the ActionMode.Callback defined above
+			        mActionMode = ReservationActivity.this.startActionMode(mActionModeCallback);
+					v.setActivated(true);
+					//ListViewAllReservation.setItemChecked(pos, true);
+					selectedItemId = pos;
+					
+				}
+				return false;
+			}
+		});
 	}
 	
 	public void showReservations()
@@ -124,7 +175,10 @@ public class ReservationActivity extends Activity {
 				reservation = jsonObj.getJSONObject("Reservation");
 				
 				item = new HashMap<String,Object>();
-
+				
+				// B_id
+				item.put("B_id", book.getString("B_id"));
+				
 				// B_title
 				item.put("B_title", book.getString("B_title"));
 				
@@ -134,8 +188,11 @@ public class ReservationActivity extends Activity {
 				// B_publisher
 				item.put("B_publisher", book.getString("B_publisher"));
 				
-				// R_id
+				// R_id, L_id, R_getBookDate, R_datetime
 				item.put("R_id", reservation.getString("R_id"));
+				item.put("L_id", reservation.getString("L_id"));
+				item.put("R_getBookDate", reservation.getString("R_getBookDate"));
+				item.put("datetime", reservation.getString("R_datetime"));
 				
 				// R_datetime
 				String[] datetime = reservation.getString("R_datetime").split("T");
@@ -164,10 +221,6 @@ public class ReservationActivity extends Activity {
 					item.put("R_isActivated", "InActive");
 				}
 				
-				
-
-				
-				
 				list.add(item);
 			}
 			
@@ -178,6 +231,97 @@ public class ReservationActivity extends Activity {
 			ListViewAllReservation.setAdapter(adapter);
 			adapter.notifyDataSetChanged();
 		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private class CancelReservation extends AsyncTask<String, Void, String>{
+		private final HttpClient  client = new DefaultHttpClient();
+		private ProgressDialog Dialog = new ProgressDialog(ReservationActivity.this);
+		
+		@Override
+		protected void onPreExecute() {
+			Dialog.setCancelable(false);
+			Dialog.setCanceledOnTouchOutside(false);
+			Dialog.setTitle("Loading");
+			Dialog.setMessage("Please wait...");
+			Dialog.show();
+		}
+		
+		@Override
+		protected String doInBackground(String... params) {
+			
+			String result = null;
+			try
+			{
+				HttpPut httpPut = new HttpPut(params[0]);
+				HttpEntity se = new StringEntity(params[1], HTTP.UTF_8);
+				httpPut.setEntity(se);
+				httpPut.setHeader("Content-Encoding", "UTF-8");
+				httpPut.setHeader("Content-Type", "application/json");
+				HttpResponse httpResponse = client.execute(httpPut);
+				if(httpResponse.getStatusLine().getStatusCode() == 200)
+				{
+					result = EntityUtils.toString(httpResponse.getEntity());
+				}
+				else
+				{
+					result = httpResponse.getStatusLine().toString();
+				}
+				
+			}
+			catch(Exception e)
+			{
+				
+			}
+			return result;
+		}
+		
+		@Override
+		protected void onPostExecute(String result)
+		{
+			Dialog.dismiss();
+			Log.d("Cancel Reservation Result", result);
+			CancelReservationPostExecute(result);
+		}
+	}
+	
+	private void CancelReservationPostExecute(String result)
+	{
+		try 
+		{
+			JSONObject jsonObj = new JSONObject(result);
+			AlertDialog.Builder builder = new AlertDialog.Builder(ReservationActivity.this);
+			
+			if(jsonObj.getBoolean("Result") == true)
+			{
+				builder.setTitle("Accepted");
+				builder.setMessage(jsonObj.getString("Message"));
+				builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+						showReservations();
+						list.clear();
+					}
+				});
+				builder.create().show();
+			}
+			else
+			{
+				builder.setTitle("Rejected");
+				builder.setMessage(jsonObj.getString("Message"));
+				builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
+				builder.create().show();
+			}
+		} 
+		catch (JSONException e) 
+		{
 			e.printStackTrace();
 		}
 	}
@@ -203,6 +347,70 @@ public class ReservationActivity extends Activity {
 		}
 	    return false;
     }
+	
+	@SuppressLint("NewApi")
+	private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
+		
+		@Override
+		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+			return false;
+		}
+		
+		// Invoke when Tick is click & ActionMode.finish()
+		@Override
+		public void onDestroyActionMode(ActionMode mode) {
+			mActionMode = null;
+			ListViewAllReservation.setItemChecked(-1, true);
+		}
+		
+		@Override
+		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+			MenuInflater inflater = mode.getMenuInflater();
+	        inflater.inflate(R.menu.show_reservation_on_listview_item_selected, menu);
+	        return true;
+		}
+		
+		@Override
+		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+			switch (item.getItemId()) {
+	            case R.id.action_renew:
+	                HashMap<String,Object> bookItem = list.get(ListViewAllReservation.getCheckedItemPosition());
+	                String url = Generic.serverurl + "Reservation/PutReservation?token=" + Generic.loginToken;
+	                JSONObject jsonObj = new JSONObject();
+	                try 
+	                {
+						jsonObj.put("R_id", bookItem.get("R_id").toString());
+						jsonObj.put("L_id", bookItem.get("L_id").toString());
+						jsonObj.put("B_id", bookItem.get("B_id").toString());
+						jsonObj.put("R_datetime", bookItem.get("datetime").toString());
+						if(bookItem.get("R_getBookDate") == null)
+						{
+							jsonObj.put("R_getBookDate", JSONObject.NULL);
+						}
+						else
+						{
+							jsonObj.put("R_getBookDate", bookItem.get("R_getBookDate").toString());
+						}
+					} 
+	                catch (JSONException e) 
+	                {
+						e.printStackTrace();
+					}
+	                
+	                if(checkNetworkState())
+	                {
+	                	Log.d("Cancel reservation", url+"\n"+jsonObj.toString());
+	                	new CancelReservation().execute(url, jsonObj.toString());
+	                }
+	                
+	                mode.finish(); // Action picked, so close the CAB
+	                return true;
+	            default:
+	                return false;
+			}
+
+		}
+	};
 	
 	private boolean checkNetworkState()
 	{
