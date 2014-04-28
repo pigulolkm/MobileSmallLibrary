@@ -41,6 +41,13 @@
 			 android:textAppearance="?android:attr/textAppearanceSmall" 
 			 android:layout_marginLeft="10dip">
 		 </TextView>
+		 <TextView
+		     android:id="@+id/textViewReservationGetBookDateTime" 
+			 android:layout_width="wrap_content" 
+			 android:layout_height="wrap_content"
+			 android:textAppearance="?android:attr/textAppearanceSmall" 
+			 android:layout_marginLeft="10dip">
+		 </TextView>
 		 <TextView 
 		     android:id="@+id/textViewReservationFinishDateTime" 
 			 android:layout_width="wrap_content" 

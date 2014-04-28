@@ -188,15 +188,26 @@ public class ReservationActivity extends Activity {
 				// B_publisher
 				item.put("B_publisher", book.getString("B_publisher"));
 				
-				// R_id, L_id, R_getBookDate, R_datetime
+				// R_id, L_id, R_datetime
 				item.put("R_id", reservation.getString("R_id"));
 				item.put("L_id", reservation.getString("L_id"));
-				item.put("R_getBookDate", reservation.getString("R_getBookDate"));
 				item.put("datetime", reservation.getString("R_datetime"));
 				
 				// R_datetime
 				String[] datetime = reservation.getString("R_datetime").split("T");
 				item.put("R_datetime", "Reserved Date : "+ datetime[0]);
+				
+				// R_getBookDate
+				item.put("getBookDate", reservation.getString("R_getBookDate"));
+				if(!reservation.isNull("R_getBookDate"))
+				{
+					String[] getBookDate = reservation.getString("R_getBookDate").split("T");
+					item.put("R_getBookDate", "Got book deadline : " + getBookDate[0]);
+				}
+				else
+				{
+					item.put("R_getBookDate", "Got book deadline : N/A");
+				}
 				
 				// R_finishDatetime
 				if(!reservation.isNull("R_finishDatetime"))
@@ -204,11 +215,11 @@ public class ReservationActivity extends Activity {
 					String finishDatetime = reservation.getString("R_finishDatetime").replace("T", " ");
 					String[] temp = finishDatetime.split(":");
 					String YYYYmmddHHMM = temp[0] + ":" + temp[1];
-					item.put("R_finishDatetime", "Got book on : " + YYYYmmddHHMM);
+					item.put("R_finishDatetime", "Finished on : " + YYYYmmddHHMM);
 				}
 				else
 				{
-					item.put("R_finishDatetime", "Got book on : N/A");
+					item.put("R_finishDatetime", "Finished on : N/A");
 				}
 				
 				// R_isActivated
@@ -225,8 +236,8 @@ public class ReservationActivity extends Activity {
 			}
 			
 			adapter = new SimpleAdapter(ReservationActivity.this, list, R.layout.listview_reservation_book_item, 
-					new String[]{"B_title","B_author","B_publisher","R_datetime", "R_finishDatetime", "R_isActivated"},
-					new int[]{R.id.textViewReservationTitle, R.id.textViewReservationAuthor, R.id.textViewReservationPublisher, R.id.textViewReservationDateTime, R.id.textViewReservationFinishDateTime, R.id.textViewReservationState});
+					new String[]{"B_title","B_author","B_publisher","R_datetime", "R_getBookDate", "R_finishDatetime", "R_isActivated"},
+					new int[]{R.id.textViewReservationTitle, R.id.textViewReservationAuthor, R.id.textViewReservationPublisher, R.id.textViewReservationDateTime, R.id.textViewReservationGetBookDateTime, R.id.textViewReservationFinishDateTime, R.id.textViewReservationState});
 			
 			ListViewAllReservation.setAdapter(adapter);
 			adapter.notifyDataSetChanged();
@@ -383,13 +394,13 @@ public class ReservationActivity extends Activity {
 						jsonObj.put("L_id", bookItem.get("L_id").toString());
 						jsonObj.put("B_id", bookItem.get("B_id").toString());
 						jsonObj.put("R_datetime", bookItem.get("datetime").toString());
-						if(bookItem.get("R_getBookDate") == null)
+						if(bookItem.get("getBookDate") == null)
 						{
-							jsonObj.put("R_getBookDate", JSONObject.NULL);
+							jsonObj.put("getBookDate", JSONObject.NULL);
 						}
 						else
 						{
-							jsonObj.put("R_getBookDate", bookItem.get("R_getBookDate").toString());
+							jsonObj.put("getBookDate", bookItem.get("getBookDate").toString());
 						}
 					} 
 	                catch (JSONException e) 

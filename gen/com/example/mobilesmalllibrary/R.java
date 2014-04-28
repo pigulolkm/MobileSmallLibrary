@@ -252,11 +252,11 @@ containing a value of this type.
         public static final int ListViewNotificationSetting=0x7f050019;
         public static final int TextViewLastLoginTime=0x7f05000c;
         public static final int TextViewWelcome=0x7f05000d;
-        public static final int action_renew=0x7f050036;
-        public static final int action_settings=0x7f050035;
+        public static final int action_renew=0x7f050037;
+        public static final int action_settings=0x7f050036;
         public static final int btnReset=0x7f050015;
         public static final int btnSeachBooks=0x7f050017;
-        public static final int cameraPreview=0x7f050034;
+        public static final int cameraPreview=0x7f050035;
         public static final int content_frame=0x7f05000a;
         public static final int drawer_layout=0x7f050009;
         public static final int editTextSearchKey=0x7f050013;
@@ -291,9 +291,10 @@ containing a value of this type.
         public static final int textViewNonReturnedAmount=0x7f05001e;
         public static final int textViewReservationAuthor=0x7f05002f;
         public static final int textViewReservationDateTime=0x7f050031;
-        public static final int textViewReservationFinishDateTime=0x7f050032;
+        public static final int textViewReservationFinishDateTime=0x7f050033;
+        public static final int textViewReservationGetBookDateTime=0x7f050032;
         public static final int textViewReservationPublisher=0x7f050030;
-        public static final int textViewReservationState=0x7f050033;
+        public static final int textViewReservationState=0x7f050034;
         public static final int textViewReservationTitle=0x7f05002e;
         public static final int tv_item=0x7f05002c;
     }
