@@ -17,37 +17,82 @@
 	
 	    <LinearLayout
 	        android:id="@+id/linearLayout1"
+	        android:orientation="vertical"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_alignParentLeft="true"
 	        android:layout_alignParentTop="true" >
-	
-	        <EditText
-	            android:id="@+id/editTextSearchKey"
-	            android:layout_width="140dip"
-	            android:layout_height="wrap_content"
-	            android:layout_weight="1"
-	            android:ems="10"
-	            android:inputType="textPersonName" >
-	
-	            <requestFocus />
-	        </EditText>
-	
-	        <Spinner
-	            android:id="@+id/spinnerSeachOption"
-	            android:layout_width="100dp"
-	            android:layout_height="match_parent"
-	            android:layout_weight="0.15" />
+	        
+		    <LinearLayout
+		        android:orientation="horizontal"
+		        android:layout_width="match_parent"
+		        android:layout_height="match_parent" >
+		
+		        <EditText
+		            android:id="@+id/editTextSearchKey"
+		            android:layout_width="140dip"
+		            android:layout_height="wrap_content"
+		            android:layout_weight="1"
+		            android:ems="10"
+		            android:inputType="textPersonName" >
+		
+		            <requestFocus />
+		        </EditText>
+		
+		        <Spinner
+		            android:id="@+id/spinnerSeachOption"
+		            android:layout_width="100dp"
+		            android:layout_height="match_parent"
+		            android:layout_weight="0.15" />
+		    </LinearLayout>
+		    <LinearLayout
+		        android:orientation="horizontal"
+		        android:layout_width="match_parent"
+		        android:layout_height="match_parent"
+		        android:layout_marginTop="10dp" >
+		
+		        <EditText
+		            android:id="@+id/editTextSearchKey2"
+		            android:layout_width="140dip"
+		            android:layout_height="wrap_content"
+		            android:layout_weight="1"
+		            android:ems="10"
+		            android:inputType="textPersonName" >
+		
+		            <requestFocus />
+		        </EditText>
+		
+		        <Spinner
+		            android:id="@+id/spinnerSeachOption2"
+		            android:layout_width="100dp"
+		            android:layout_height="match_parent"
+		            android:layout_weight="0.15" />
+		    </LinearLayout>
+		    <LinearLayout
+		        android:orientation="horizontal"
+		        android:layout_width="match_parent"
+		        android:layout_height="match_parent"
+		        android:layout_marginTop="10dp" >
+		
+		        <EditText
+		            android:id="@+id/editTextSearchKey3"
+		            android:layout_width="140dip"
+		            android:layout_height="wrap_content"
+		            android:layout_weight="1"
+		            android:ems="10"
+		            android:inputType="textPersonName" >
+		
+		            <requestFocus />
+		        </EditText>
+		
+		        <Spinner
+		            android:id="@+id/spinnerSeachOption3"
+		            android:layout_width="100dp"
+		            android:layout_height="match_parent"
+		            android:layout_weight="0.15" />
+		    </LinearLayout>
+		    
 	    </LinearLayout>
-	
-	    <Button
-	        android:id="@+id/btnReset"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_above="@+id/linearLayout2"
-	        android:layout_alignLeft="@+id/linearLayout2"
-	        android:text="Reset"
-	        android:onClick="reset" />
 	    
 	    <Button
 	        android:id="@+id/btnSeachBooks"
@@ -58,20 +103,16 @@
 	        android:layout_marginTop="23dp"
 	        android:onClick="searchBooks"
 	        android:text="Search" />
-	
-	    <LinearLayout
-	        android:id="@+id/linearLayout2"
+
+	    <Button
+	        android:id="@+id/btnReset"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
+	        android:layout_alignBaseline="@+id/btnSeachBooks"
+	        android:layout_alignBottom="@+id/btnSeachBooks"
 	        android:layout_alignLeft="@+id/linearLayout1"
-	        android:layout_below="@+id/btnSeachBooks"
-	        android:layout_marginTop="15dp"
-	        android:orientation="vertical" >
-	
-	        <ListView
-	            android:id="@+id/listViewSearchResult"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content" />
-	    </LinearLayout>
+	        android:onClick="reset"
+	        android:text="Reset" />
+
 	</RelativeLayout>
 </RelativeLayout>
