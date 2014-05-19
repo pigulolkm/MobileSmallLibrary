@@ -72,20 +72,6 @@
             android:label="@string/title_activity_settings"
             android:screenOrientation="portrait" >
         </activity>
-
-        <receiver
-            android:name="com.example.mobilesmalllibrary.GcmBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND" >
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-
-                <category android:name="com.javapapers.android" />
-            </intent-filter>
-        </receiver>
-
-        <service android:name="com.example.mobilesmalllibrary.GCMNotificationIntentService" />
-
         <activity
             android:name="com.example.mobilesmalllibrary.ShowAnnouncementActivity"
             android:label="@string/title_activity_show_announcement"
@@ -101,6 +87,25 @@
             android:label="@string/title_activity_reservation"
             android:screenOrientation="portrait"  >
         </activity>
+        
+        <receiver
+            android:name="com.example.mobilesmalllibrary.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="com.javapapers.android" />
+            </intent-filter>
+        </receiver>
+        <receiver 
+            android:name="com.example.mobilesmalllibrary.ExpireAlarmReceiver">
+            <intent-filter>
+                <action android:name="Expire_Alarm_Alert"/>
+            </intent-filter>
+        </receiver>
+
+        <service android:name="com.example.mobilesmalllibrary.GCMNotificationIntentService" />
     </application>
 
 </manifest>

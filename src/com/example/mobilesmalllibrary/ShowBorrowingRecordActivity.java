@@ -1,6 +1,10 @@
 package com.example.mobilesmalllibrary;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 import org.apache.http.HttpResponse;
@@ -20,11 +24,16 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -52,6 +61,7 @@ public class ShowBorrowingRecordActivity extends Activity {
 	private int selectedItemId;
 	private ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
 	private SimpleAdapter adapter;
+	private SQLiteDatabase db;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -163,6 +173,7 @@ public class ShowBorrowingRecordActivity extends Activity {
 			Dialog.dismiss();
 
 			ShowBorrowingRecordListView(result);
+			SetExpireReminder(result);
 		}
 	}
 	
@@ -208,6 +219,51 @@ public class ShowBorrowingRecordActivity extends Activity {
 			listViewBorrowingRecordResult.setAdapter(adapter);
 			adapter.notifyDataSetChanged();
 		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void SetExpireReminder(String result)
+	{
+		// skip create DB for removing the alarm by records
+		// db = Generic.createDatabase(getApplicationContext());
+		try 
+		{
+			JSONObject json = new JSONObject(result);
+			JSONArray jsonArray = json.getJSONArray("NonReturnedRecord");
+			JSONObject jsonObj;
+			
+			for(int i = 0; i < jsonArray.length(); i++)
+			{
+				jsonObj = jsonArray.getJSONObject(i);
+				// TODO add record to DB for removing the alarm by records -- skip
+				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+				Date date = format.parse(jsonObj.getString("ShouldReturnedDate").split("T")[0]);
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTime(date);
+				calendar.set(Calendar.HOUR_OF_DAY, 12);
+				calendar.add(calendar.DAY_OF_MONTH, -1);
+				Log.d("SetExpireReminder", String.valueOf(calendar.get(Calendar.DATE))+"-"+String.valueOf(calendar.get(Calendar.MONTH)+1)+"-"+String.valueOf(calendar.get(Calendar.YEAR)));
+				Log.d("SetExpireReminder", calendar.getTime().toString());
+				
+				Intent intent = new Intent(this, ExpireAlarmReceiver.class);
+				intent.setAction("Expire_Alarm_Alert");
+				intent.putExtra("Bid", jsonObj.getString("Bid"));
+				intent.putExtra("title", jsonObj.getString("Title"));
+				intent.putExtra("author", jsonObj.getString("Author"));
+				intent.putExtra("publisher", jsonObj.getString("Publisher"));
+				intent.putExtra("shouldReturnedDate", jsonObj.getString("ShouldReturnedDate").split("T")[0]);
+			
+				PendingIntent pi = PendingIntent.getBroadcast(this, Integer.parseInt(jsonObj.getString("Bid")), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+				
+				AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+				am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pi);
+			}
+		}
+		catch (JSONException e)
+		{
+			e.printStackTrace();
+		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 	}

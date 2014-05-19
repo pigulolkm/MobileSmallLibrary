@@ -5,6 +5,7 @@ import java.security.MessageDigest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
@@ -24,6 +25,7 @@ public class Generic {
 	public static final String BookStatus_ONTHESHELF = "On the shelf";
 	public static final String BookStatus_BORROWED = "Borrowed";
 	public static final String BookStatus_RESERVED = "Reserved";
+	public static final String DATABASE_NAME = "mobileSmallLibraryDB";
 	// Shared Preferences keys
 	public static final String notificationStatusAnnouncement = "notificationStatusAnnouncement";
 	public static final String notificationStatusExpire = "notificationStatusExpire reminder";
@@ -76,5 +78,32 @@ public class Generic {
 			return false;
 		}
 		return true;
+	}
+	
+	public static SQLiteDatabase createDatabase(Context c)
+	{
+		SQLiteDatabase db = null;
+		// Table
+		final String TABLE_BOOK = "book";
+		// Table Columns
+		final String[] BOOK_COLUMNS = { "bid", "btitle", "bauthor", "bpublisher", "bShouldReturnedDate" };
+		
+		final String TABLE_CREATION = 	"create table if not exists "
+										+ TABLE_BOOK + "( "
+										+ BOOK_COLUMNS[0] + " interger primary key, "
+										+ BOOK_COLUMNS[1] + " text not null, "
+										+ BOOK_COLUMNS[2] + " text not null, "
+										+ BOOK_COLUMNS[3] + " text not null, "
+										+ BOOK_COLUMNS[4] + " text not null); ";
+		try
+		{
+			db = c.openOrCreateDatabase(DATABASE_NAME, SQLiteDatabase.CREATE_IF_NECESSARY, null);
+			db.execSQL(TABLE_CREATION);
+		}
+		catch (Exception e)
+		{
+			
+		}
+		return db;
 	}
 }
